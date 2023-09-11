@@ -1,8 +1,8 @@
 # Replace the text below to customize your site
 site_name: HBO-ICT SpaceInvaders
 site_description: Documentation for Game Development project
-site_author: <student name here>
-copyright: Copyright <year> GD <student name here>
+site_author: Tijn Stuifbergen
+copyright: Copyright 2023 GD Tijn Stuifbergen
 
 site_url: https://localhost:8000/
 

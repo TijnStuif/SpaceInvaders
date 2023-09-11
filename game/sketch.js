@@ -54,7 +54,4 @@ function draw() {
       pBullet.spawn();
       playerBullet.y = playerBullet.y - 5;
   }
-  if (playerBullet.y < 0) {
-    pBullet.pBulletFired == false;
-  }
 }

@@ -1,1 +1,1 @@
-Klik [hier](./game/) om mijn game te spelen
+Klik [hier](./game/) om mijn game te spelen!

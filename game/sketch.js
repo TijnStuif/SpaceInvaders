@@ -14,6 +14,9 @@ function setup () {
 function draw () {
   image(spaceImg, 0, 0);
   //image(spaceshipImg, playerShipX, playerShipY);
+  fill(0,255,0);
+  noStroke();
+  rect(playerShipX, playerShipY, widthPlayerShip, heightPlayerShip);
   if (keyIsDown(LEFT_ARROW) && playerShipX > 0 || keyIsDown(65) && playerShipX > 0){
     playerShipX = playerShipX - 10;
   }

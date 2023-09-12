@@ -3,7 +3,7 @@ const heightPlayerShip = 20
 var playerShipX = 570
 const playerShipY = 570
 function preload() {
-  spaceImg = loadImage('images_game/space.jpg')
+  spaceImg = loadImage('./images_game/space.jpg')
   //spaceshipImg = loadImage('images_game/player_ship.png')
 }
 

@@ -1,6 +1,6 @@
 # Technische documentatie
 
-## de achtergrond maken en een kleur geven
+## De achtergrond maken en een kleur geven
 Ik ben dit blok begonnen door een aantal curcussen van codecademy af te ronden (https://www.codecademy.com/courses/learn-p5js-fundamentals/lessons/p5js-introduction-to-creative-coding/exercises/p5js-what-is). Hierna was ik head-first de code ingedoken, en aangezien ik nog nooit eerder met javascript heb geprogrammeerd, was het even zoeken naar een begin. Toen ik eenmaal door de product backlogs had gekeken, ging ik direct aan de achtergrond bezig. Hiervoor heb ik mijn codecademy goed weten te gebruiken, door functies als fill() te gebruiken om de achtergrond de juiste, zwarte kleur te geven.
 
 ```javascript

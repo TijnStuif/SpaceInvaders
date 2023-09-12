@@ -14,6 +14,8 @@ function draw () {
 ```
 Zoals hier te zien heb ik mijn canvas groter gemaakt dan dat hij in het begin was, zodat ik meer ruimte heb om mee te spelen. Daarnaast heb ik voor de background functie, de grayscale-waarde 0 ingevuld zodat de achtergrond volledig zwart is.
 
+## Het karakter van de speler maken en vorm geven
+
 Voordat ik beweging kon toevoegen aan het karakter van de speler, moet er natuurlijk wel een karakter zijn. Hiervoor maak ik gebruik van de draw functie, waarin ik vervolgens een rechthoek teken. Deze kleur ik groen, aangezien dat het meest gepast is in deze setting.
 
 ```javascript
@@ -26,6 +28,7 @@ function draw () {
 ```
 Ook heb ik er hiervoor gekozen om mijn rechthoek geen randje te geven met de noStroke() functie. Deze is namelijk onnodig als de rechthoek maar een kleur heeft.
 
+## Variablen maken, toekennen en gebruiken
 Hierna ben ik begonnen aan de eerste functionaliteit van de game: het karakter laten bewegen. Hiervoor moest ik eerst een paar variablen toewijzen.
 
 ```javascript

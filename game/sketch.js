@@ -2,9 +2,9 @@ const widthPlayerShip = 60
 const heightPlayerShip = 20
 var playerShipX = 570
 const playerShipY = 570
-let img;
 function preload() {
-  spaceImg = loadImage('images_game/Space.jpg')
+  spaceImg = loadImage('images_game/space.jpg')
+  //spaceshipImg = loadImage('images_game/player_ship.png')
 }
 
 function setup () {
@@ -12,11 +12,8 @@ function setup () {
 }
 
 function draw () {
-  background(0);
   image(spaceImg, 0, 0);
-  fill(0,255,0);
-  noStroke();
-  rect(playerShipX, playerShipY, widthPlayerShip, heightPlayerShip)
+  //image(spaceshipImg, playerShipX, playerShipY);
   if (keyIsDown(LEFT_ARROW) && playerShipX > 0 || keyIsDown(65) && playerShipX > 0){
     playerShipX = playerShipX - 10;
   }

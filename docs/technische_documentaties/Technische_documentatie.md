@@ -57,3 +57,17 @@ function draw () {
 
 Zoals hier te zien heb ik gebruik gemaakt van mijn eerder gemaakte variable, namelijk de X/horizontale positie van het karakter.  Hierin heb ik ook gebruik gemaakt van de if-and functie, waardoor er twee criteria moeten voldoen voordat een bepaalde actie verricht wordt. Deze criteria zijn, dat het rechter- of linkerpijltje wordt ingedrukt EN dat het schip zich nog binnen de canvas bevindt. Anders zou het karakter van het scherm vliegen, en dat is niet de bedoeling.
 
+## Foto's preloaden en gebruiken
+Voor een meer immersieve ervaring, wilde ik graag een space-like afbeelding gebruiken als achtergrond. Deze moet niet te afleidend zijn, zodat de speler nog zijn eigen karakter kan zien.
+
+```javascript
+function preload() {
+  spaceImg = loadImage('images_game/space.jpg');
+}
+
+function draw () {
+  image(spaceImg, 0, 0);
+}
+```
+
+Hier heb ik allereerst het fotobestand voorgeladen, en hieraan een variable toegekend. Op deze manier kan ik de foto op later moment snel laden en laten zien op het scherm. Ook heb ik een apart mapje (images_game) gemaakt, zodat alle foto's gestructureerd zijn opgeslagen. Vervolgens heb ik de foto in Paint aangepast tot de grootte van mijn canvas, en de startpositie (0,0) zodat de foto in zijn geheel over de canvas valt.

@@ -5,7 +5,7 @@ const playerShipY = 570;
 var playerBulletX = 595;
 var playerBulletY = 580;
 function preload() {
-  spaceImg = loadImage('./images_game/space.jpg');
+  spaceImg = loadImage('images_game/space.jpg');
   //spaceshipImg = loadImage('images_game/player_ship.png');
 }
 

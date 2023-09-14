@@ -1,14 +1,18 @@
 const widthPlayerShip = 60;
 const heightPlayerShip = 20;
+const widthEnemyShip = 60;
+const heightEnemyShip = 20;
 const moveSpeedPlayerShip = 10;
 const distanceFromLeftSide = 5;
 const distanceFromRightSide = 65;
-var playerShipX = 568;
 const playerShipY = 560;
-var playerBulletX = 595;
-var playerBulletY = 580;
-var enemyShipX = 100;
-var enemyShipY = 50;
+const AKeyCode = 65;
+const DKeyCode = 68;
+let playerShipX = 568;
+let playerBulletX = 595;
+let playerBulletY = 580;
+let enemyShipX = 100;
+let enemyShipY = 50;
 
 function preload () {
   spaceImg = loadImage('images_game/space.jpg');
@@ -21,15 +25,20 @@ function setup () {
 function draw () {
   image(spaceImg, 0, 0);
   image(playerShipImg, playerShipX, playerShipY);
-  for (let enemyShipX = 100; enemyShipX < 1200; enemyShipX++) {for (let enemyShipY = 50; enemyShipY < 150; enemyShipY++)
-    rect(100 + enemyShipX * 200, 0, 100 + enemyShipX * 200, enemyShipY)
+  fill(255, 0, 0);
+  for (let enemyShooterX = 0.4; enemyShooterX < 5; enemyShooterX++) {
+    for (let enemyShooterY = 0; enemyShooterY < 1; enemyShooterY++) {
+    rect(100 + enemyShooterX * 200, 100 + enemyShooterY * 50, widthEnemyShip, heightEnemyShip) }
   }
-  console.log(enemyShipX)
-  console.log(enemyShipY)
-  if (keyIsDown(LEFT_ARROW) && playerShipX > distanceFromLeftSide || keyIsDown(65) && playerShipX > distanceFromLeftSide){
+  fill(0, 0, 255);
+  for (let enemyShipX = 0.4; enemyShipX < 5; enemyShipX++) {
+    for (let enemyShipY = 2; enemyShipY < 5; enemyShipY++)
+    rect(100 + enemyShipX * 200, 50 + enemyShipY * 50, widthEnemyShip, heightEnemyShip)
+  }
+  if (keyIsDown(LEFT_ARROW) && playerShipX > distanceFromLeftSide || keyIsDown(AKeyCode) && playerShipX > distanceFromLeftSide){
     playerShipX = playerShipX - moveSpeedPlayerShip;
   }
-  if (keyIsDown(RIGHT_ARROW) && playerShipX < width - distanceFromRightSide || keyIsDown(68) && playerShipX < width - distanceFromRightSide) {
+  if (keyIsDown(RIGHT_ARROW) && playerShipX < width - distanceFromRightSide || keyIsDown(DKeyCode) && playerShipX < width - distanceFromRightSide) {
     playerShipX = playerShipX + moveSpeedPlayerShip;
   }
 }

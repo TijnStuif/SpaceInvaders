@@ -4,13 +4,12 @@ var playerShipX = 570;
 const playerShipY = 570;
 var playerBulletX = 595;
 var playerBulletY = 580;
-const space_image_source = 'images_game/space.jpg';
-//const player_ship_image_source = 'images_game/player_ship.png'
 
+function preload () {
+  spaceImg = loadImage('images_game/space.jpg')
+}
 function setup () {
   createCanvas(1200,600);
-  spaceImg = loadImage(space_image_source);
-  playerShipImg = loadImage(player_ship_image_source);
 }
 
 function draw () {

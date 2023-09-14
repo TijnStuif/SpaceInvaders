@@ -1,10 +1,12 @@
-const widthPlayerShip = 60
-const heightPlayerShip = 20
-var playerShipX = 570
-const playerShipY = 570
+const widthPlayerShip = 60;
+const heightPlayerShip = 20;
+var playerShipX = 570;
+const playerShipY = 570;
+var playerBulletX = 595;
+var playerBulletY = 580;
 function preload() {
-  spaceImg = loadImage('./images_game/space.jpg')
-  //spaceshipImg = loadImage('images_game/player_ship.png')
+  spaceImg = loadImage('./images_game/space.jpg');
+  //spaceshipImg = loadImage('images_game/player_ship.png');
 }
 
 function setup () {

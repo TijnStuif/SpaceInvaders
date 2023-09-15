@@ -3,7 +3,7 @@ Voor deze retrospective maakt onze squad gebruik van de: wat ging er goed? wat g
 
 
 ## Wat ging er goed?
-Ik heb een goede basis kunnen leggen voor mijn game en mijn kennis over JavaScript/p5. Dit heb ik kunnen doen met behulp van Codecademy.Daarnaast heb ik in de lessen hard kunnen werken door de tijd die is gegeven in de les. Ondanks dat ik geen echte doelen had gesteld aan het begin van de sprint, ben ik redelijk blij met het resultaat wat ik heb gehaald in 2 weken tijd.
+Ik heb een goede basis kunnen leggen voor mijn game en mijn kennis over JavaScript/p5. Dit heb ik kunnen doen met behulp van Codecademy.Daarnaast heb ik in de lessen hard kunnen werken door de tijd die is gegeven in de les. Ondanks dat ik geen echte doelen had gesteld aan het begin van de sprint, ben ik redelijk blij met het resultaat wat ik heb gehaald in 2 weken tijd. Als ik een deel van de opdracht niet begreep, probeerde ik zo snel mogelijk erachter te komen wat de oplossingsmogelijkheden zijn en welke van deze het meest toepasbaar is op de situatie.
 
 ## Wat ging er niet goed?
 Ik heb te weinig tijd besteed aan het werken aan mijn project. Hierdoor loop ik een stukje achter de rest van de klas. Dit is mijn eigen fout en ik wil dan ook meer tijd besteden aan mijn project in de komende sprint(s).

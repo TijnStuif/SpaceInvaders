@@ -55,9 +55,9 @@ function draw () {
     playerShipX = playerShipX + moveSpeedPlayerShip;
   }
   for(let playerBullet of playerBullets){
+    playerBullet.y = playerBullet.y - moveSpeedPlayerBullet;
     fill(127);
     image(playerBulletImg, playerBullet.x,playerBullet.y);
-    playerBullet.y = playerBullet.y - moveSpeedPlayerBullet;
     if (playerBullet.y < 0) {
       playerBullets.splice(0, 1);
     }

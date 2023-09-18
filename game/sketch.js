@@ -10,8 +10,6 @@ const bulletHeight = 20;
 let playerBulletX = 595;
 let playerBulletY = 580;
 let playerShipX = 568;
-let enemyShipX = 0;
-let enemyShipY = 0;
 
 let playerBullets = []
 
@@ -38,15 +36,13 @@ function keyPressed() {
 function draw () {
   image(spaceImg, 0, 0);
   image(playerShipImg, playerShipX, playerShipY);
-  fill(255, 0, 0);
-  for (let enemyShooterX = 0; enemyShooterX < 10; enemyShooterX++) {
-    for (let enemyShooterY = 0; enemyShooterY < 1; enemyShooterY++) {
-    image(shootingEnemyImg, 100 + enemyShooterX * 100, 100 + enemyShooterY * 50) }
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 1; j++) {
+    image(shootingEnemyImg, 100 + i * 100, 100 + j * 50) }
   }
-  fill(0, 0, 255);
-  for (let enemyShipX = 0; enemyShipX < 10; enemyShipX++) {
-    for (let enemyShipY = 2; enemyShipY < 5; enemyShipY++)
-    image(peacefulEnemyImg, 100 + enemyShipX * 100, 50 + enemyShipY * 50);
+  for (let i = 0; i < 10; i++) {
+    for (let j = 2; j < 5; j++)
+    image(peacefulEnemyImg, 100 + i * 100, 50 + j * 50);
   }
   if (keyIsDown(LEFT_ARROW) && playerShipX > distanceFromLeftSide || keyIsDown(AKeyCode) && playerShipX > distanceFromLeftSide){
     playerShipX = playerShipX - moveSpeedPlayerShip;
@@ -62,8 +58,4 @@ function draw () {
       playerBullets.splice(0, 1);
     }
   }
-console.log(playerBullets)
-  /*if (playerBullet == true) 
-  {playerBulletSpawn()}
-  playerBulletY = playerBulletY - 5;*/
 }

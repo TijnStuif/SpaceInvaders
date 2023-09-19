@@ -68,32 +68,16 @@ function draw () {
 
 for(let peacefulEnemy of peacefulEnemies){
   image(peacefulEnemyImg, peacefulEnemy.x, peacefulEnemy.y);
-  if (peacefulEnemy.x == 1140) {
-    peacefulEnemy.direction = 0;
-  } 
-  if (peacefulEnemy.x == 0) {
-    peacefulEnemy.direction = 1;
-  }
-  if (peacefulEnemy.direction == 1) {
-    peacefulEnemy.x += moveSpeedEnemy;
-  }
-  if (peacefulEnemy.direction == 0) {
-    peacefulEnemy.x -= moveSpeedEnemy;
+  peacefulEnemy.x += moveSpeedEnemy * peacefulEnemy.direction;
+  if (peacefulEnemy.x < 0 || peacefulEnemy.x > width - distanceFromRightSide) {
+    peacefulEnemy.direction *= -1;
   }
 }
 for(let shootingEnemy of shootingEnemies){
   image(shootingEnemyImg, shootingEnemy.x, shootingEnemy.y);
-  if (shootingEnemy.x == 1140) {
-    shootingEnemy.direction = 0;
-  } 
-  if (shootingEnemy.x == 0) {
-    shootingEnemy.direction = 1;
-  }
-  if (shootingEnemy.direction == 1) {
-    shootingEnemy.x += moveSpeedEnemy;
-  }
-  if (shootingEnemy.direction == 0) {
-    shootingEnemy.x -= moveSpeedEnemy;
+  shootingEnemy.x += moveSpeedEnemy * shootingEnemy.direction;
+  if (shootingEnemy.x < 0 || shootingEnemy.x > width - distanceFromRightSide) {
+    shootingEnemy.direction *= -1;
   }
 }
 

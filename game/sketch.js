@@ -30,25 +30,25 @@ function setup () {
   createCanvas(1200,600);
 
   
-for (let i = 0; i < 10; i++) {
-  for (let j = 0; j < 1; j++) {
-    let shootingEnemy = {
-      x: 100 + i * 100,
-      y: 100 + j * 50,
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 1; j++) {
+      let shootingEnemy = {
+        x: 100 + i * 100,
+        y: 100,
+      }
+      shootingEnemies.push(shootingEnemy)
     }
-    shootingEnemies.push(shootingEnemy)
+  for (let i = 0; i < 10; i++) {
+    for (let j = 1; j < 5; j++) {
+      let peacefulEnemy = {
+        x: 100 + i * 100,
+        y: 100 + j * 50,
+      }
+      peacefulEnemies.push(peacefulEnemy)
+      }
+    }
   }
-for (let i = 0; i < 10; i++) {
-  for (let j = 2; j < 5; j++) {
-    let peacefulEnemy = {
-      x: 100 + i * 100,
-      y: 100 + j * 50,
-    }
-    peacefulEnemies.push(peacefulEnemy)
-    }
   }
-}
-}
 
 
 function keyPressed() {
@@ -71,6 +71,9 @@ for(let peacefulEnemy of peacefulEnemies){
     enemyGroupDirection *= -1;
     enemyGroupY += 50;
   }
+  if (enemyGroupY > 250) {
+    remove();
+  }
 }
 for(let shootingEnemy of shootingEnemies){
   image(shootingEnemyImg, shootingEnemy.x, shootingEnemy.y + enemyGroupY);
@@ -78,6 +81,9 @@ for(let shootingEnemy of shootingEnemies){
   if (shootingEnemy.x < 0 || shootingEnemy.x > width - distanceFromRightSide) {
     enemyGroupDirection *= -1;
     enemyGroupY += 50;
+  }
+  if (enemyGroupY > 250) {
+    remove();
   }
 }
 

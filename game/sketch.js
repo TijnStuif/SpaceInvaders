@@ -12,6 +12,7 @@ let playerBulletX = 595;
 let playerBulletY = 580;
 let playerShipX = 568;
 let enemyGroupDirection = 1;
+let enemyGroupY = 0;
 
 let playerBullets = []
 let shootingEnemies = []
@@ -36,7 +37,6 @@ for (let i = 0; i < 10; i++) {
       y: 100 + j * 50,
     }
     shootingEnemies.push(shootingEnemy)
-    console.log(shootingEnemy.x)
   }
 for (let i = 0; i < 10; i++) {
   for (let j = 2; j < 5; j++) {
@@ -45,7 +45,6 @@ for (let i = 0; i < 10; i++) {
       y: 100 + j * 50,
     }
     peacefulEnemies.push(peacefulEnemy)
-    console.log(peacefulEnemy.x)
     }
   }
 }
@@ -66,17 +65,19 @@ function draw () {
   image(playerShipImg, playerShipX, playerShipY);
 
 for(let peacefulEnemy of peacefulEnemies){
-  image(peacefulEnemyImg, peacefulEnemy.x, peacefulEnemy.y);
+  image(peacefulEnemyImg, peacefulEnemy.x, peacefulEnemy.y + enemyGroupY);
   peacefulEnemy.x += moveSpeedEnemy * enemyGroupDirection;
   if (peacefulEnemy.x < 0 || peacefulEnemy.x > width - distanceFromRightSide) {
     enemyGroupDirection *= -1;
+    enemyGroupY += 50;
   }
 }
 for(let shootingEnemy of shootingEnemies){
-  image(shootingEnemyImg, shootingEnemy.x, shootingEnemy.y);
+  image(shootingEnemyImg, shootingEnemy.x, shootingEnemy.y + enemyGroupY);
   shootingEnemy.x += moveSpeedEnemy * enemyGroupDirection;
   if (shootingEnemy.x < 0 || shootingEnemy.x > width - distanceFromRightSide) {
     enemyGroupDirection *= -1;
+    enemyGroupY += 50;
   }
 }
 

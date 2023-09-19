@@ -1,5 +1,6 @@
 const moveSpeedPlayerShip = 10;
 const moveSpeedPlayerBullet = 5;
+const moveSpeedEnemy = 1;
 const distanceFromLeftSide = 5;
 const distanceFromRightSide = 65;
 const playerShipY = 560;
@@ -12,6 +13,8 @@ let playerBulletY = 580;
 let playerShipX = 568;
 
 let playerBullets = []
+let shootingEnemies = []
+let peacefulEnemies = []
 
 function preload () {
   spaceImg = loadImage('images_game/space.jpg');
@@ -20,9 +23,35 @@ function preload () {
   shootingEnemyImg = loadImage('images_game/shooting_enemy.png');
   playerBulletImg = loadImage('images_game/player_bullet.png');
 }
+
 function setup () {
   createCanvas(1200,600);
+
+  
+for (let i = 0; i < 10; i++) {
+  for (let j = 0; j < 1; j++) {
+    let shootingEnemy = {
+      x: 100 + i * 100,
+      y: 100 + j * 50,
+      direction: 1
+    }
+    shootingEnemies.push(shootingEnemy)
+    console.log(shootingEnemy.x)
+  }
+for (let i = 0; i < 10; i++) {
+  for (let j = 2; j < 5; j++) {
+    let peacefulEnemy = {
+      x: 100 + i * 100,
+      y: 100 + j * 50,
+      direction: 1
+    }
+    peacefulEnemies.push(peacefulEnemy)
+    console.log(peacefulEnemy.x)
+    }
+  }
 }
+}
+
 
 function keyPressed() {
   if (keyCode === 32) {
@@ -36,14 +65,39 @@ function keyPressed() {
 function draw () {
   image(spaceImg, 0, 0);
   image(playerShipImg, playerShipX, playerShipY);
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 1; j++) {
-    image(shootingEnemyImg, 100 + i * 100, 100 + j * 50) }
+
+for(let peacefulEnemy of peacefulEnemies){
+  image(peacefulEnemyImg, peacefulEnemy.x, peacefulEnemy.y);
+  if (peacefulEnemy.x == 1140) {
+    peacefulEnemy.direction = 0;
+  } 
+  if (peacefulEnemy.x == 0) {
+    peacefulEnemy.direction = 1;
   }
-  for (let i = 0; i < 10; i++) {
-    for (let j = 2; j < 5; j++)
-    image(peacefulEnemyImg, 100 + i * 100, 50 + j * 50);
+  if (peacefulEnemy.direction == 1) {
+    peacefulEnemy.x += moveSpeedEnemy;
   }
+  if (peacefulEnemy.direction == 0) {
+    peacefulEnemy.x -= moveSpeedEnemy;
+  }
+}
+for(let shootingEnemy of shootingEnemies){
+  image(shootingEnemyImg, shootingEnemy.x, shootingEnemy.y);
+  if (shootingEnemy.x == 1140) {
+    shootingEnemy.direction = 0;
+  } 
+  if (shootingEnemy.x == 0) {
+    shootingEnemy.direction = 1;
+  }
+  if (shootingEnemy.direction == 1) {
+    shootingEnemy.x += moveSpeedEnemy;
+  }
+  if (shootingEnemy.direction == 0) {
+    shootingEnemy.x -= moveSpeedEnemy;
+  }
+}
+
+  
   if (keyIsDown(LEFT_ARROW) && playerShipX > distanceFromLeftSide || keyIsDown(AKeyCode) && playerShipX > distanceFromLeftSide){
     playerShipX = playerShipX - moveSpeedPlayerShip;
   }
@@ -51,7 +105,7 @@ function draw () {
     playerShipX = playerShipX + moveSpeedPlayerShip;
   }
   for(let playerBullet of playerBullets){
-    playerBullet.y = playerBullet.y - moveSpeedPlayerBullet;
+    playerBullet.y -= moveSpeedPlayerBullet;
     fill(127);
     image(playerBulletImg, playerBullet.x,playerBullet.y);
     if (playerBullet.y < 0) {
@@ -59,3 +113,4 @@ function draw () {
     }
   }
 }
+

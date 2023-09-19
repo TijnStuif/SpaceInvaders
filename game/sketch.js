@@ -1,16 +1,14 @@
 const moveSpeedPlayerShip = 10;
 const moveSpeedPlayerBullet = 5;
 const moveSpeedEnemy = 1;
-const distanceFromLeftSide = 5;
-const distanceFromRightSide = 65;
-const playerShipY = 560;
+const distanceFromLeftSide = 30;
+const distanceFromRightSide = 30;
+const playerShipY = 590;
 const AKeyCode = 65;
 const DKeyCode = 68;
-const bulletWidth = 10;
-const bulletHeight = 20;
-let playerBulletX = 595;
-let playerBulletY = 580;
-let playerShipX = 568;
+let playerBulletX = 600;
+let playerBulletY = 590;
+let playerShipX = 580;
 let enemyGroupDirection = 1;
 let enemyGroupY = 0;
 
@@ -28,7 +26,6 @@ function preload () {
 
 function setup () {
   createCanvas(1200,600);
-
   
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 1; j++) {
@@ -50,24 +47,24 @@ function setup () {
   }
   }
 
-
 function keyPressed() {
   if (keyCode === 32) {
     let playerBullet = {
-    x: playerShipX + 25,
+    x: playerShipX,
     y: playerShipY}
   playerBullets.push(playerBullet)
     }
 }
 
 function draw () {
-  image(spaceImg, 0, 0);
+  imageMode(CENTER)
+  image(spaceImg, 600, 300);
   image(playerShipImg, playerShipX, playerShipY);
 
 for(let peacefulEnemy of peacefulEnemies){
   image(peacefulEnemyImg, peacefulEnemy.x, peacefulEnemy.y + enemyGroupY);
   peacefulEnemy.x += moveSpeedEnemy * enemyGroupDirection;
-  if (peacefulEnemy.x < 0 || peacefulEnemy.x > width - distanceFromRightSide) {
+  if (peacefulEnemy.x < distanceFromLeftSide || peacefulEnemy.x > width - distanceFromRightSide) {
     enemyGroupDirection *= -1;
     enemyGroupY += 50;
   }
@@ -78,7 +75,7 @@ for(let peacefulEnemy of peacefulEnemies){
 for(let shootingEnemy of shootingEnemies){
   image(shootingEnemyImg, shootingEnemy.x, shootingEnemy.y + enemyGroupY);
   shootingEnemy.x += moveSpeedEnemy * enemyGroupDirection;
-  if (shootingEnemy.x < 0 || shootingEnemy.x > width - distanceFromRightSide) {
+  if (shootingEnemy.x < distanceFromLeftSide || shootingEnemy.x > width - distanceFromRightSide) {
     enemyGroupDirection *= -1;
     enemyGroupY += 50;
   }
@@ -86,15 +83,13 @@ for(let shootingEnemy of shootingEnemies){
     remove();
   }
 }
-
-  
-  if (keyIsDown(LEFT_ARROW) && playerShipX > distanceFromLeftSide || keyIsDown(AKeyCode) && playerShipX > distanceFromLeftSide){
+if (keyIsDown(LEFT_ARROW) && playerShipX > distanceFromLeftSide || keyIsDown(AKeyCode) && playerShipX > distanceFromLeftSide){
     playerShipX = playerShipX - moveSpeedPlayerShip;
   }
-  if (keyIsDown(RIGHT_ARROW) && playerShipX < width - distanceFromRightSide || keyIsDown(DKeyCode) && playerShipX < width - distanceFromRightSide) {
+if (keyIsDown(RIGHT_ARROW) && playerShipX < width - distanceFromRightSide || keyIsDown(DKeyCode) && playerShipX < width - distanceFromRightSide) {
     playerShipX = playerShipX + moveSpeedPlayerShip;
   }
-  for(let playerBullet of playerBullets){
+for(let playerBullet of playerBullets){
     playerBullet.y -= moveSpeedPlayerBullet;
     fill(127);
     image(playerBulletImg, playerBullet.x,playerBullet.y);

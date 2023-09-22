@@ -13,10 +13,10 @@ let playerShipX = 580;
 let enemyGroupDirection = 1;
 let enemyGroupY = 0;
 
-let playerBullets = []
-let enemyBullets = []
-let shootingEnemies = []
-let peacefulEnemies = []
+let playerBullets = [];
+let enemyBullets = [];
+let shootingEnemies = [];
+let peacefulEnemies = [];
 
 function preload () {
   spaceImg = loadImage('images_game/space.jpg');
@@ -108,7 +108,7 @@ for (let enemyBullet of enemyBullets) {
 }
 for (let playerBullet of playerBullets){
     playerBullet.y -= moveSpeedPlayerBullet;
-    image(playerBulletImg, playerBullet.x,playerBullet.y);
+    image(playerBulletImg, playerBullet.x,playerBullet.y, 5, 25);
     if (playerBullet.y < 0) {
       playerBullets.splice(0, 1);
     }

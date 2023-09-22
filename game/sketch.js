@@ -1,4 +1,4 @@
-const moveSpeedPlayerShip = 10;
+const moveSpeedPlayerShip = 8;
 const moveSpeedPlayerBullet = 5;
 const moveSpeedEnemyBullet = 2;
 const moveSpeedEnemy = 1;
@@ -82,7 +82,7 @@ for (let shootingEnemy of shootingEnemies){
     enemyGroupDirection *= -1;
     enemyGroupY += 50;
   }
-  if (random(0,400) > 399) {
+  if (random(0,300) > 299) {
     let enemyBullet = {
       x: shootingEnemy.x,
       y: shootingEnemy.y + enemyGroupY
@@ -93,6 +93,7 @@ for (let shootingEnemy of shootingEnemies){
     remove();
   }
 }
+
 if (keyIsDown(LEFT_ARROW) && playerShipX > distanceFromLeftSide || keyIsDown(AKeyCode) && playerShipX > distanceFromLeftSide){
     playerShipX = playerShipX - moveSpeedPlayerShip;
   }

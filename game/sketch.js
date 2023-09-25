@@ -65,11 +65,14 @@ function draw () {
   imageMode(CENTER)
   image(spaceImg, 600, 300);
   image(playerShipImg, playerShipX, playerShipY);
-  let enemyTouchesGround = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.y > height - distanceFromGround) || shootingEnemies.some(shootingEnemy => shootingEnemy.y > height - distanceFromGround)
-  let enemyTouchesLeft = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.x < distanceFromLeftSide) || shootingEnemies.some(shootingEnemy => shootingEnemy.y < distanceFromLeftSide)
-  let enemyTouchesRight = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.x > width - distanceFromRightSide) || shootingEnemies.some(shootingEnemy => shootingEnemy.y > width - distanceFromRightSide)
+  let enemyTouchesGround = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.y > height - distanceFromGround) || 
+  shootingEnemies.some(shootingEnemy => shootingEnemy.y > height - distanceFromGround)
+  let enemyTouchesLeft = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.x < distanceFromLeftSide) || 
+  shootingEnemies.some(shootingEnemy => shootingEnemy.y < distanceFromLeftSide)
+  let enemyTouchesRight = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.x > width - distanceFromRightSide) || 
+  shootingEnemies.some(shootingEnemy => shootingEnemy.y > width - distanceFromRightSide)
   if (enemyTouchesGround == true) {
-      console.log("L + ratio + yrou'e")
+      console.log("you lose! (said in El Primo voice)")
   }
 for (let peacefulEnemy of peacefulEnemies){
   image(peacefulEnemyImg, peacefulEnemy.x, peacefulEnemy.y);
@@ -131,4 +134,7 @@ for (let shootingEnemy of shootingEnemies)
       playerBullets.splice(i, 1)
     }
   }
+
+ if (peacefulEnemies.length == 0 && shootingEnemies.length == 0)
+ console.log("you win!")
 }

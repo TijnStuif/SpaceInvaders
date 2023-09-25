@@ -79,7 +79,7 @@ function draw () {
   let enemyTouchesRight = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.x > width - distanceFromRightSide) || 
                           shootingEnemies.some(shootingEnemy => shootingEnemy.y > width - distanceFromRightSide)
   if (enemyTouchesGround == true) {
-      console.log("you lose! (said in El Primo voice)")
+      console.log("you lose!")
   }
 //for-loop that loads the image of the peaceful enemy and gives it movement
 for (let peacefulEnemy of peacefulEnemies){
@@ -150,6 +150,14 @@ for (let shootingEnemy of shootingEnemies)
       playerBullets.splice(i, 1)
     }
   }
+//for-loop that adds collision between enemy bullets and the player ship
+for (let i = enemyBullets.length - 1; i >= 0; i--){
+  let enemyBullet = enemyBullets[i]
+  if (dist(playerShipX, playerShipY, enemyBullet.x, enemyBullet.y) < 30) {
+    enemyBullets.splice(i, 1)
+    console.log("you lose!")
+  }
+}
 //if-statement that checks if both types of enemies are dead. If they are, a win-message will pop up
  if (peacefulEnemies.length == 0 && shootingEnemies.length == 0)
  console.log("you win!")

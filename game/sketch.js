@@ -1,3 +1,4 @@
+//all constants, variables and arrays
 const moveSpeedPlayerShip = 8;
 const moveSpeedPlayerBullet = 5;
 const moveSpeedEnemyBullet = 2;
@@ -17,6 +18,7 @@ let enemyBullets = [];
 let shootingEnemies = [];
 let peacefulEnemies = [];
 
+//preload all images used
 function preload () {
   spaceImg = loadImage('images_game/space.jpg');
   playerShipImg = loadImage('images_game/player_ship.png');
@@ -28,6 +30,7 @@ function preload () {
 
 function setup () {
   createCanvas(1200,600);
+  //for-loop that creates the shooting enemies
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 1; j++) {
       let shootingEnemy = {
@@ -38,6 +41,7 @@ function setup () {
       shootingEnemies.push(shootingEnemy)
     }
   }
+  //for-loop that creates the peaceful enemies
   for (let i = 0; i < 10; i++) {
     for (let j = 1; j < 5; j++) {
       let peacefulEnemy = {
@@ -51,6 +55,7 @@ function setup () {
   console.log(peacefulEnemies)
   }
 
+//creates a bullet object when the spacebar is pressed
 function keyPressed() {
   if (keyCode === 32) {
     let playerBullet = {
@@ -62,18 +67,21 @@ function keyPressed() {
 
 function draw () {
   clear();
+  //this makes sure all images are loaded from the center
   imageMode(CENTER)
   image(spaceImg, 600, 300);
   image(playerShipImg, playerShipX, playerShipY);
+  //makes variables that check if any enemy touches the sides and bottom of the screen
   let enemyTouchesGround = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.y > height - distanceFromGround) || 
-  shootingEnemies.some(shootingEnemy => shootingEnemy.y > height - distanceFromGround)
+                          shootingEnemies.some(shootingEnemy => shootingEnemy.y > height - distanceFromGround)
   let enemyTouchesLeft = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.x < distanceFromLeftSide) || 
-  shootingEnemies.some(shootingEnemy => shootingEnemy.y < distanceFromLeftSide)
+                          shootingEnemies.some(shootingEnemy => shootingEnemy.y < distanceFromLeftSide)
   let enemyTouchesRight = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.x > width - distanceFromRightSide) || 
-  shootingEnemies.some(shootingEnemy => shootingEnemy.y > width - distanceFromRightSide)
+                          shootingEnemies.some(shootingEnemy => shootingEnemy.y > width - distanceFromRightSide)
   if (enemyTouchesGround == true) {
       console.log("you lose! (said in El Primo voice)")
   }
+//for-loop that loads the image of the peaceful enemy and gives it movement
 for (let peacefulEnemy of peacefulEnemies){
   image(peacefulEnemyImg, peacefulEnemy.x, peacefulEnemy.y);
   if (enemyTouchesLeft == true || enemyTouchesRight == true) {
@@ -82,6 +90,7 @@ for (let peacefulEnemy of peacefulEnemies){
   }
   peacefulEnemy.x += moveSpeedEnemy * peacefulEnemy.direction;
 }
+//for-loop that loads the image of the shooting enemy and gives it movement, as well as making it spawn bullets at a random interval
 for (let shootingEnemy of shootingEnemies){
   image(shootingEnemyImg, shootingEnemy.x, shootingEnemy.y);
   if (enemyTouchesLeft == true || enemyTouchesRight == true) {
@@ -97,13 +106,17 @@ for (let shootingEnemy of shootingEnemies){
     enemyBullets.push(enemyBullet);
   }
 }
-
-if (keyIsDown(LEFT_ARROW) && playerShipX > distanceFromLeftSide || keyIsDown(AKeyCode) && playerShipX > distanceFromLeftSide){
+//moves the player to the left if either the left-arrow is pressed or the a-button
+if (keyIsDown(LEFT_ARROW) && playerShipX > distanceFromLeftSide || 
+    keyIsDown(AKeyCode) && playerShipX > distanceFromLeftSide){
     playerShipX = playerShipX - moveSpeedPlayerShip;
   }
-if (keyIsDown(RIGHT_ARROW) && playerShipX < width - distanceFromRightSide || keyIsDown(DKeyCode) && playerShipX < width - distanceFromRightSide) {
+//moves the player to the right if either the right-arrow is pressed or the d-button
+if (keyIsDown(RIGHT_ARROW) && playerShipX < width - distanceFromRightSide || 
+    keyIsDown(DKeyCode) && playerShipX < width - distanceFromRightSide) {
     playerShipX = playerShipX + moveSpeedPlayerShip;
   }
+//for-loop that determines the spawn point of the enemy bullet and gives it movement
 for (let enemyBullet of enemyBullets) {
   enemyBullet.y += moveSpeedEnemyBullet;
   image(enemyBulletImg, enemyBullet.x, enemyBullet.y);
@@ -111,6 +124,7 @@ for (let enemyBullet of enemyBullets) {
     enemyBullets.splice(0, 1);
   }
 }
+//for-loop that determines the spawn point of the player bullet and gives it movement
 for (let playerBullet of playerBullets){
     playerBullet.y -= moveSpeedPlayerBullet;
     image(playerBulletImg, playerBullet.x,playerBullet.y, 5, 25);
@@ -118,6 +132,7 @@ for (let playerBullet of playerBullets){
       playerBullets.splice(0, 1);
     }
   }
+//for-loop that adds collision between player bullets and peaceful enemies
 for (let peacefulEnemy of peacefulEnemies)
   for (let i = playerBullets.length - 1; i >= 0; i--){
     let playerBullet = playerBullets[i]
@@ -126,6 +141,7 @@ for (let peacefulEnemy of peacefulEnemies)
       playerBullets.splice(i, 1)
     }
   }
+//for-loop that adds collision between player bullets and shooting enemies
 for (let shootingEnemy of shootingEnemies)
   for (let i = playerBullets.length - 1; i >= 0; i--){
     let playerBullet = playerBullets[i]
@@ -134,7 +150,7 @@ for (let shootingEnemy of shootingEnemies)
       playerBullets.splice(i, 1)
     }
   }
-
+//if-statement that checks if both types of enemies are dead. If they are, a win-message will pop up
  if (peacefulEnemies.length == 0 && shootingEnemies.length == 0)
  console.log("you win!")
 }

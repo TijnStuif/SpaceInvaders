@@ -4,15 +4,14 @@ const moveSpeedEnemyBullet = 2;
 const moveSpeedEnemy = 1;
 const distanceFromLeftSide = 30;
 const distanceFromRightSide = 30;
+const distanceFromGround = 30;
 const playerShipY = 590;
 const AKeyCode = 65;
 const DKeyCode = 68;
 let playerBulletX = 600;
 let playerBulletY = 590;
 let playerShipX = 580;
-let enemyGroupDirection = 1;
-let enemyGroupY = 0;
-
+let enemyDirection = 1;
 let playerBullets = [];
 let enemyBullets = [];
 let shootingEnemies = [];
@@ -34,19 +33,22 @@ function setup () {
       let shootingEnemy = {
         x: 100 + i * 100,
         y: 100,
+        direction: 1,
       }
       shootingEnemies.push(shootingEnemy)
     }
+  }
   for (let i = 0; i < 10; i++) {
     for (let j = 1; j < 5; j++) {
       let peacefulEnemy = {
         x: 100 + i * 100,
         y: 100 + j * 50,
+        direction: 1,
       }
       peacefulEnemies.push(peacefulEnemy)
       }
     }
-  }
+  console.log(peacefulEnemies)
   }
 
 function keyPressed() {
@@ -63,34 +65,33 @@ function draw () {
   imageMode(CENTER)
   image(spaceImg, 600, 300);
   image(playerShipImg, playerShipX, playerShipY);
-
+  let enemyTouchesGround = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.y > height - distanceFromGround) || shootingEnemies.some(shootingEnemy => shootingEnemy.y > height - distanceFromGround)
+  let enemyTouchesLeft = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.x < distanceFromLeftSide) || shootingEnemies.some(shootingEnemy => shootingEnemy.y < distanceFromLeftSide)
+  let enemyTouchesRight = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.x > width - distanceFromRightSide) || shootingEnemies.some(shootingEnemy => shootingEnemy.y > width - distanceFromRightSide)
+  if (enemyTouchesGround == true) {
+      console.log("L + ratio + yrou'e")
+  }
 for (let peacefulEnemy of peacefulEnemies){
-  image(peacefulEnemyImg, peacefulEnemy.x, peacefulEnemy.y + enemyGroupY);
-  peacefulEnemy.x += moveSpeedEnemy * enemyGroupDirection;
-  if (peacefulEnemy.x < distanceFromLeftSide || peacefulEnemy.x > width - distanceFromRightSide) {
-    enemyGroupDirection *= -1;
-    enemyGroupY += 50;
+  image(peacefulEnemyImg, peacefulEnemy.x, peacefulEnemy.y);
+  if (enemyTouchesLeft == true || enemyTouchesRight == true) {
+    peacefulEnemy.direction *= -1;
+    peacefulEnemy.y += 50;
   }
-  if (enemyGroupY > 250) {
-    remove();
-  }
+  peacefulEnemy.x += moveSpeedEnemy * peacefulEnemy.direction;
 }
 for (let shootingEnemy of shootingEnemies){
-  image(shootingEnemyImg, shootingEnemy.x, shootingEnemy.y + enemyGroupY);
-  shootingEnemy.x += moveSpeedEnemy * enemyGroupDirection;
-  if (shootingEnemy.x < distanceFromLeftSide || shootingEnemy.x > width - distanceFromRightSide) {
-    enemyGroupDirection *= -1;
-    enemyGroupY += 50;
+  image(shootingEnemyImg, shootingEnemy.x, shootingEnemy.y);
+  if (enemyTouchesLeft == true || enemyTouchesRight == true) {
+    shootingEnemy.y += 50;
+    shootingEnemy.direction *= -1;
   }
+  shootingEnemy.x += moveSpeedEnemy * shootingEnemy.direction;
   if (random(0,300) > 299) {
     let enemyBullet = {
       x: shootingEnemy.x,
-      y: shootingEnemy.y + enemyGroupY
+      y: shootingEnemy.y
     }
     enemyBullets.push(enemyBullet);
-  }
-  if (enemyGroupY > 250) {
-    remove();
   }
 }
 
@@ -112,6 +113,22 @@ for (let playerBullet of playerBullets){
     image(playerBulletImg, playerBullet.x,playerBullet.y, 5, 25);
     if (playerBullet.y < 0) {
       playerBullets.splice(0, 1);
+    }
+  }
+for (let peacefulEnemy of peacefulEnemies)
+  for (let i = playerBullets.length - 1; i >= 0; i--){
+    let playerBullet = playerBullets[i]
+    if (dist(peacefulEnemy.x, peacefulEnemy.y, playerBullet.x, playerBullet.y) < 30){
+      peacefulEnemies.splice(peacefulEnemies.indexOf(peacefulEnemy),1)
+      playerBullets.splice(i, 1)
+    }
+  }
+for (let shootingEnemy of shootingEnemies)
+  for (let i = playerBullets.length - 1; i >= 0; i--){
+    let playerBullet = playerBullets[i]
+    if (dist(shootingEnemy.x, shootingEnemy.y, playerBullet.x, playerBullet.y) < 30){
+      shootingEnemies.splice(shootingEnemies.indexOf(shootingEnemy),1)
+      playerBullets.splice(i, 1)
     }
   }
 }

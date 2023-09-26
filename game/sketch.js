@@ -83,7 +83,7 @@ function draw () {
   image(playerShipImg, playerShipX, playerShipY);
   //makes variables that check if any enemy touches the sides and bottom of the screen
   let enemyTouchesGround = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.y > height - distanceFromGround) || 
-                          shootingEnemies.some(shootingEnemy => shootingEnemy.y > height - distanceFromGround)
+                            shootingEnemies.some(shootingEnemy => shootingEnemy.y > height - distanceFromGround)
   let enemyTouchesLeft = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.x < distanceFromLeftSide) || 
                           shootingEnemies.some(shootingEnemy => shootingEnemy.x < distanceFromLeftSide)
   let enemyTouchesRight = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.x > width - distanceFromRightSide) || 
@@ -173,6 +173,7 @@ function draw () {
     }
   }
 
+  //function that shows the score in the top-left.
   showScore();
 
   //for-loop that adds collision between enemy bullets and the player ship, as well 

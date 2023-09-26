@@ -19,6 +19,7 @@ let playerBullets = [];
 let enemyBullets = [];
 let shootingEnemies = [];
 let peacefulEnemies = [];
+let shieldUnits = [];
 
 //preload all images used
 function preload () {
@@ -27,7 +28,8 @@ function preload () {
   peacefulEnemyImg = loadImage('images_game/peaceful_enemy.png');
   shootingEnemyImg = loadImage('images_game/shooting_enemy.png');
   playerBulletImg = loadImage('images_game/player_bullet.png');
-  enemyBulletImg = loadImage('images_game/enemy_bullet.png')
+  enemyBulletImg = loadImage('images_game/enemy_bullet.png');
+  shieldUnitImg = loadImage('images_game/shield.png');
 }
 
 function setup () {
@@ -43,6 +45,7 @@ function setup () {
       shootingEnemies.push(shootingEnemy)
     }
   }
+
   //for-loop that creates the peaceful enemies
   for (let i = 0; i < 10; i++) {
     for (let j = 1; j < 5; j++) {
@@ -54,8 +57,17 @@ function setup () {
       peacefulEnemies.push(peacefulEnemy)
       }
     }
-  console.log(peacefulEnemies)
+    
+  //for-loop that spawns the shield units
+  for (let i = 0; i < 4; i++) {
+    let shieldUnit = {
+      x: 150 + i * 300,
+      y: 500,
+      health: 10
+    }
+    shieldUnits.push(shieldUnit)
   }
+}
 
 //creates a bullet object when the spacebar is pressed
 function keyPressed() {
@@ -76,11 +88,13 @@ function showScore() {
 
 function draw () {
   clear();
+
   //this makes sure all images are loaded from the center
   imageMode(CENTER)
   textAlign(CENTER)
   image(spaceImg, 600, 300);
   image(playerShipImg, playerShipX, playerShipY);
+
   //makes variables that check if any enemy touches the sides and bottom of the screen
   let enemyTouchesGround = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.y > height - distanceFromGround) || 
                             shootingEnemies.some(shootingEnemy => shootingEnemy.y > height - distanceFromGround)
@@ -88,12 +102,14 @@ function draw () {
                           shootingEnemies.some(shootingEnemy => shootingEnemy.x < distanceFromLeftSide)
   let enemyTouchesRight = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.x > width - distanceFromRightSide) || 
                           shootingEnemies.some(shootingEnemy => shootingEnemy.x > width - distanceFromRightSide)
+
   if (enemyTouchesGround == true) {
     fill(255, 0, 0)
     textSize(100)
     text("YOU LOSE!", width / 2, height / 2)
     noLoop()
   }
+
   //for-loop that loads the image of the peaceful enemy and gives it movement
   for (let peacefulEnemy of peacefulEnemies){
     image(peacefulEnemyImg, peacefulEnemy.x, peacefulEnemy.y);
@@ -103,6 +119,7 @@ function draw () {
       }
     peacefulEnemy.x += moveSpeedEnemy * peacefulEnemy.direction;
   }
+
   //for-loop that loads the image of the shooting enemy and gives it movement, as well as making it spawn bullets at a random interval
   for (let shootingEnemy of shootingEnemies){
    image(shootingEnemyImg, shootingEnemy.x, shootingEnemy.y);
@@ -122,15 +139,20 @@ function draw () {
       enemyBullets.push(enemyBullet);
     }
   }
+
+  //for-loop that loads the image of the shield units on the correct x and y coordinate
+  for (let shieldUnit of shieldUnits) {
+    image(shieldUnitImg, shieldUnit.x, shieldUnit.y, 100, 100)
+  }
   //moves the player to the left if either the left-arrow is pressed or the a-button
   if (keyIsDown(LEFT_ARROW) && playerShipX > distanceFromLeftSide || 
     keyIsDown(AKeyCode) && playerShipX > distanceFromLeftSide){
-    playerShipX = playerShipX - moveSpeedPlayerShip;
+    playerShipX -= moveSpeedPlayerShip;
   }
   //moves the player to the right if either the right-arrow is pressed or the d-button
   if (keyIsDown(RIGHT_ARROW) && playerShipX < width - distanceFromRightSide || 
     keyIsDown(DKeyCode) && playerShipX < width - distanceFromRightSide) {
-    playerShipX = playerShipX + moveSpeedPlayerShip;
+    playerShipX += moveSpeedPlayerShip;
   }
   //for-loop that determines the spawn point of the enemy bullet and gives it movement
   for (let enemyBullet of enemyBullets) {
@@ -160,6 +182,29 @@ function draw () {
     }
   }
 
+  //for-loop that adds collision between the enemy bullets and the shield units
+  for (let shieldUnit of shieldUnits) {
+    for (let i = enemyBullets.length - 1; i >= 0; i--){
+      let enemyBullet = enemyBullets[i]
+      if (dist(shieldUnit.x, shieldUnit.y, enemyBullet.x, enemyBullet.y) < 40) {
+      enemyBullets.splice(i, 1)
+      shieldUnit.health -= 1
+      }
+    }
+    if (shieldUnit.health <= 0) {
+      shieldUnits.splice(shieldUnits.indexOf(shieldUnit), 1)
+    }
+  }
+
+   //for-loop that adds collision between the player bullets and the shield units
+   for (let shieldUnit of shieldUnits) {
+    for (let i = playerBullets.length - 1; i >= 0; i--){
+      let playerBullet = playerBullets[i]
+      if (dist(shieldUnit.x, shieldUnit.y, playerBullet.x, playerBullet.y) < 40) {
+      playerBullets.splice(i, 1)
+      }
+    }
+  }
   //for-loop that adds collision between player bullets and shooting enemies
   for (let shootingEnemy of shootingEnemies){
     for (let i = playerBullets.length - 1; i >= 0; i--){

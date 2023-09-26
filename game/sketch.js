@@ -191,7 +191,7 @@ function draw () {
   if (peacefulEnemies.length == 0 && shootingEnemies.length == 0){
     fill(0, 255, 0)
     textSize(100)
-    text("you win!", width / 2, height / 2)
+    text("YOU WIN!", width / 2, height / 2)
     noLoop();
     }
 }

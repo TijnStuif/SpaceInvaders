@@ -13,6 +13,7 @@ let playerBulletX = 600;
 let playerBulletY = 590;
 let playerShipX = 580;
 let enemyDirection = 1;
+let score = 0;
 let playerBullets = [];
 let enemyBullets = [];
 let shootingEnemies = [];
@@ -80,7 +81,9 @@ function draw () {
   let enemyTouchesRight = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.x > width - distanceFromRightSide) || 
                           shootingEnemies.some(shootingEnemy => shootingEnemy.y > width - distanceFromRightSide)
   if (enemyTouchesGround == true) {
-      console.log("you lose!")
+    fill(255, 0, 0)
+    text("YOU LOSE!", width / 2, height / 2)
+    noLoop()
   }
   //for-loop that loads the image of the peaceful enemy and gives it movement
   for (let peacefulEnemy of peacefulEnemies){
@@ -140,6 +143,8 @@ function draw () {
     if (dist(peacefulEnemy.x, peacefulEnemy.y, playerBullet.x, playerBullet.y) < 30){
       peacefulEnemies.splice(peacefulEnemies.indexOf(peacefulEnemy),1)
       playerBullets.splice(i, 1)
+      score += 10;
+      console.log(score)
     }
   }
 
@@ -150,18 +155,25 @@ function draw () {
       if (dist(shootingEnemy.x, shootingEnemy.y, playerBullet.x, playerBullet.y) < 30){
         shootingEnemies.splice(shootingEnemies.indexOf(shootingEnemy),1)
         playerBullets.splice(i, 1)
+        score += 30;
+        console.log(score)
       }
     }
   }
-  //for-loop that adds collision between enemy bullets and the player ship
+  //for-loop that adds collision between enemy bullets and the player ship, as well 
   for (let i = enemyBullets.length - 1; i >= 0; i--){
     let enemyBullet = enemyBullets[i]
     if (dist(playerShipX, playerShipY, enemyBullet.x, enemyBullet.y) < 30) {
-    enemyBullets.splice(i, 1)
-    console.log("you lose!")
+      enemyBullets.splice(i, 1)
+      fill(255, 0, 0)
+      text("YOU LOSE!", width / 2, height / 2)
+      noLoop()
       }
-}
+  }
   //if-statement that checks if both types of enemies are dead. If they are, a win-message will pop up
-  if (peacefulEnemies.length == 0 && shootingEnemies.length == 0)
-    console.log("you win!")
+  if (peacefulEnemies.length == 0 && shootingEnemies.length == 0){
+    fill(0, 255, 0)
+    console.log("you win!", width / 2, height / 2)
+    noLoop();
+    }
 }

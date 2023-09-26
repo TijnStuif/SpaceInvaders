@@ -68,21 +68,29 @@ function keyPressed() {
   }
 }
 
+function showScore() {
+  fill(255)
+  textSize(25)
+  text(score, 40, 50)
+}
+
 function draw () {
   clear();
   //this makes sure all images are loaded from the center
   imageMode(CENTER)
+  textAlign(CENTER)
   image(spaceImg, 600, 300);
   image(playerShipImg, playerShipX, playerShipY);
   //makes variables that check if any enemy touches the sides and bottom of the screen
   let enemyTouchesGround = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.y > height - distanceFromGround) || 
                           shootingEnemies.some(shootingEnemy => shootingEnemy.y > height - distanceFromGround)
   let enemyTouchesLeft = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.x < distanceFromLeftSide) || 
-                          shootingEnemies.some(shootingEnemy => shootingEnemy.y < distanceFromLeftSide)
+                          shootingEnemies.some(shootingEnemy => shootingEnemy.x < distanceFromLeftSide)
   let enemyTouchesRight = peacefulEnemies.some(peacefulEnemy => peacefulEnemy.x > width - distanceFromRightSide) || 
-                          shootingEnemies.some(shootingEnemy => shootingEnemy.y > width - distanceFromRightSide)
+                          shootingEnemies.some(shootingEnemy => shootingEnemy.x > width - distanceFromRightSide)
   if (enemyTouchesGround == true) {
     fill(255, 0, 0)
+    textSize(100)
     text("YOU LOSE!", width / 2, height / 2)
     noLoop()
   }
@@ -164,19 +172,25 @@ function draw () {
       }
     }
   }
+
+  showScore();
+
   //for-loop that adds collision between enemy bullets and the player ship, as well 
   for (let i = enemyBullets.length - 1; i >= 0; i--){
     let enemyBullet = enemyBullets[i]
     if (dist(playerShipX, playerShipY, enemyBullet.x, enemyBullet.y) < 30) {
       enemyBullets.splice(i, 1)
       fill(255, 0, 0)
+      textSize(100)
       text("YOU LOSE!", width / 2, height / 2)
       noLoop()
       }
   }
+
   //if-statement that checks if both types of enemies are dead. If they are, a win-message will pop up
   if (peacefulEnemies.length == 0 && shootingEnemies.length == 0){
     fill(0, 255, 0)
+    textSize(100)
     text("you win!", width / 2, height / 2)
     noLoop();
     }

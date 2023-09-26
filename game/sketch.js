@@ -1,7 +1,7 @@
 //all constants, variables and arrays
 const moveSpeedPlayerShip = 8;
 const moveSpeedPlayerBullet = 5;
-const moveSpeedEnemyBullet = 2;
+const moveSpeedEnemyBullet = 6;
 const moveSpeedEnemy = 1;
 const distanceFromLeftSide = 30;
 const distanceFromRightSide = 30;
@@ -14,6 +14,7 @@ let playerBulletY = 590;
 let playerShipX = 580;
 let enemyDirection = 1;
 let score = 0;
+let bulletPity = 1
 let playerBullets = [];
 let enemyBullets = [];
 let shootingEnemies = [];
@@ -102,11 +103,14 @@ function draw () {
       shootingEnemy.direction *= -1;
       }
     shootingEnemy.x += moveSpeedEnemy * shootingEnemy.direction;
-    if (random(0,300) > 299) {
+    let randomBulletSpawn = Math.floor(random(0,100) * 1 + bulletPity);
+    bulletPity += 1;
+    if (randomBulletSpawn > 149) {
       let enemyBullet = {
         x: shootingEnemy.x,
         y: shootingEnemy.y
       }
+      bulletPity = 0;
       enemyBullets.push(enemyBullet);
     }
   }
@@ -173,7 +177,7 @@ function draw () {
   //if-statement that checks if both types of enemies are dead. If they are, a win-message will pop up
   if (peacefulEnemies.length == 0 && shootingEnemies.length == 0){
     fill(0, 255, 0)
-    console.log("you win!", width / 2, height / 2)
+    text("you win!", width / 2, height / 2)
     noLoop();
     }
 }

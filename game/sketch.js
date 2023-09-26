@@ -14,7 +14,7 @@ let playerBulletY = 590;
 let playerShipX = 580;
 let enemyDirection = 1;
 let score = 0;
-let bulletPity = 1
+let bulletPity = 1;
 let playerBullets = [];
 let enemyBullets = [];
 let shootingEnemies = [];
@@ -42,7 +42,7 @@ function setup () {
         y: 100,
         direction: 1,
       }
-      shootingEnemies.push(shootingEnemy)
+      shootingEnemies.push(shootingEnemy);
     }
   }
 
@@ -54,10 +54,10 @@ function setup () {
         y: 100 + j * 50,
         direction: 1,
       }
-      peacefulEnemies.push(peacefulEnemy)
+      peacefulEnemies.push(peacefulEnemy);
       }
     }
-    
+
   //for-loop that spawns the shield units
   for (let i = 0; i < 4; i++) {
     let shieldUnit = {
@@ -65,7 +65,7 @@ function setup () {
       y: 500,
       health: 10
     }
-    shieldUnits.push(shieldUnit)
+    shieldUnits.push(shieldUnit);
   }
 }
 
@@ -76,22 +76,22 @@ function keyPressed() {
       x: playerShipX,
       y: playerShipY
     }
-    playerBullets.push(playerBullet)
+    playerBullets.push(playerBullet);
   }
 }
 
 function showScore() {
-  fill(255)
-  textSize(25)
-  text(score, 40, 50)
+  fill(255);
+  textSize(25);
+  text(score, 40, 50);
 }
 
 function draw () {
   clear();
 
   //this makes sure all images are loaded from the center
-  imageMode(CENTER)
-  textAlign(CENTER)
+  imageMode(CENTER);
+  textAlign(CENTER);
   image(spaceImg, 600, 300);
   image(playerShipImg, playerShipX, playerShipY);
 
@@ -104,10 +104,10 @@ function draw () {
                           shootingEnemies.some(shootingEnemy => shootingEnemy.x > width - distanceFromRightSide)
 
   if (enemyTouchesGround == true) {
-    fill(255, 0, 0)
-    textSize(100)
-    text("YOU LOSE!", width / 2, height / 2)
-    noLoop()
+    fill(255, 0, 0);
+    textSize(100);
+    text("YOU LOSE!", width / 2, height / 2);
+    noLoop();
   }
 
   //for-loop that loads the image of the peaceful enemy and gives it movement
@@ -142,7 +142,7 @@ function draw () {
 
   //for-loop that loads the image of the shield units on the correct x and y coordinate
   for (let shieldUnit of shieldUnits) {
-    image(shieldUnitImg, shieldUnit.x, shieldUnit.y, 100, 100)
+    image(shieldUnitImg, shieldUnit.x, shieldUnit.y, 100, 100);
   }
   //moves the player to the left if either the left-arrow is pressed or the a-button
   if (keyIsDown(LEFT_ARROW) && playerShipX > distanceFromLeftSide || 
@@ -176,44 +176,44 @@ function draw () {
     let playerBullet = playerBullets[i]
     if (dist(peacefulEnemy.x, peacefulEnemy.y, playerBullet.x, playerBullet.y) < 30){
       peacefulEnemies.splice(peacefulEnemies.indexOf(peacefulEnemy),1)
-      playerBullets.splice(i, 1)
+      playerBullets.splice(i, 1);
       score += 10;
-      console.log(score)
+      console.log(score);
     }
   }
 
   //for-loop that adds collision between the enemy bullets and the shield units
   for (let shieldUnit of shieldUnits) {
     for (let i = enemyBullets.length - 1; i >= 0; i--){
-      let enemyBullet = enemyBullets[i]
+      let enemyBullet = enemyBullets[i];
       if (dist(shieldUnit.x, shieldUnit.y, enemyBullet.x, enemyBullet.y) < 40) {
-      enemyBullets.splice(i, 1)
-      shieldUnit.health -= 1
+      enemyBullets.splice(i, 1);
+      shieldUnit.health -= 1;
       }
     }
     if (shieldUnit.health <= 0) {
-      shieldUnits.splice(shieldUnits.indexOf(shieldUnit), 1)
+      shieldUnits.splice(shieldUnits.indexOf(shieldUnit), 1);
     }
   }
 
    //for-loop that adds collision between the player bullets and the shield units
    for (let shieldUnit of shieldUnits) {
     for (let i = playerBullets.length - 1; i >= 0; i--){
-      let playerBullet = playerBullets[i]
+      let playerBullet = playerBullets[i];
       if (dist(shieldUnit.x, shieldUnit.y, playerBullet.x, playerBullet.y) < 40) {
-      playerBullets.splice(i, 1)
+      playerBullets.splice(i, 1);
       }
     }
   }
   //for-loop that adds collision between player bullets and shooting enemies
   for (let shootingEnemy of shootingEnemies){
     for (let i = playerBullets.length - 1; i >= 0; i--){
-      let playerBullet = playerBullets[i]
+      let playerBullet = playerBullets[i];
       if (dist(shootingEnemy.x, shootingEnemy.y, playerBullet.x, playerBullet.y) < 30){
         shootingEnemies.splice(shootingEnemies.indexOf(shootingEnemy),1)
-        playerBullets.splice(i, 1)
+        playerBullets.splice(i, 1);
         score += 30;
-        console.log(score)
+        console.log(score);
       }
     }
   }
@@ -223,21 +223,21 @@ function draw () {
 
   //for-loop that adds collision between enemy bullets and the player ship, as well 
   for (let i = enemyBullets.length - 1; i >= 0; i--){
-    let enemyBullet = enemyBullets[i]
+    let enemyBullet = enemyBullets[i];
     if (dist(playerShipX, playerShipY, enemyBullet.x, enemyBullet.y) < 30) {
-      enemyBullets.splice(i, 1)
-      fill(255, 0, 0)
-      textSize(100)
-      text("YOU LOSE!", width / 2, height / 2)
-      noLoop()
+      enemyBullets.splice(i, 1);
+      fill(255, 0, 0);
+      textSize(100);
+      text("YOU LOSE!", width / 2, height / 2);
+      noLoop();
       }
   }
 
   //if-statement that checks if both types of enemies are dead. If they are, a win-message will pop up
   if (peacefulEnemies.length == 0 && shootingEnemies.length == 0){
-    fill(0, 255, 0)
-    textSize(100)
-    text("YOU WIN!", width / 2, height / 2)
+    fill(0, 255, 0);
+    textSize(100);
+    text("YOU WIN!", width / 2, height / 2);
     noLoop();
     }
 }

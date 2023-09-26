@@ -1,6 +1,6 @@
 //all constants, variables and arrays
 const moveSpeedPlayerShip = 8;
-const moveSpeedPlayerBullet = 5;
+const moveSpeedPlayerBullet = 8;
 const moveSpeedEnemyBullet = 6;
 const moveSpeedEnemy = 1;
 const distanceFromLeftSide = 30;

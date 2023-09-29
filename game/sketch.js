@@ -1,6 +1,6 @@
 //all constants, variables and arrays
 const moveSpeedPlayerShip = 8;
-const moveSpeedPlayerBullet = 8;
+const moveSpeedPlayerBullet = 15;
 const moveSpeedEnemyBullet = 6;
 const moveSpeedEnemy = 1;
 const distanceFromLeftSide = 30;
@@ -12,9 +12,11 @@ const DKeyCode = 68;
 let playerBulletX = 600;
 let playerBulletY = 590;
 let playerShipX = 580;
+let playerShipHealth = 3;
 let enemyDirection = 1;
 let score = 0;
 let bulletPity = 1;
+let ufoPity = 1;
 let playerBullets = [];
 let enemyBullets = [];
 let shootingEnemies = [];
@@ -67,6 +69,12 @@ function setup () {
     }
     shieldUnits.push(shieldUnit);
   }
+
+  let ufoEnemy = {
+    x: 0,
+    y: 200,
+    health: 1
+  }
 }
 
 //creates a bullet object when the spacebar is pressed
@@ -86,10 +94,17 @@ function showScore() {
   text(score, 40, 50);
 }
 
+function showHealth() {
+  fill(255);
+  textSize(25);
+  text(playerShipHealth, 40, 100)
+}
+
 function draw () {
   clear();
+  ufoPity += 1;
 
-  //this makes sure all images are loaded from the center
+  //this makes sure all images and text are loaded from the center
   imageMode(CENTER);
   textAlign(CENTER);
   image(spaceImg, 600, 300);
@@ -170,6 +185,8 @@ function draw () {
       playerBullets.splice(0, 1);
     }
   }
+
+
   //for-loop that adds collision between player bullets and peaceful enemies
   for (let peacefulEnemy of peacefulEnemies)
    for (let i = playerBullets.length - 1; i >= 0; i--){
@@ -218,19 +235,23 @@ function draw () {
     }
   }
 
-  //function that shows the score in the top-left.
+  //function that shows the score and health in the top-left.
   showScore();
+  showHealth();
 
   //for-loop that adds collision between enemy bullets and the player ship, as well 
   for (let i = enemyBullets.length - 1; i >= 0; i--){
     let enemyBullet = enemyBullets[i];
     if (dist(playerShipX, playerShipY, enemyBullet.x, enemyBullet.y) < 30) {
       enemyBullets.splice(i, 1);
+      playerShipHealth -= 1;
+      }
+    if (playerShipHealth <= 0) { 
       fill(255, 0, 0);
       textSize(100);
       text("YOU LOSE!", width / 2, height / 2);
       noLoop();
-      }
+    }
   }
 
   //if-statement that checks if both types of enemies are dead. If they are, a win-message will pop up

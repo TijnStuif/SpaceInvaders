@@ -97,8 +97,41 @@ function showHealth() {
   text(playerShipHealth, 40, 100)
 }
 
+/*function that checks if the ufoSpawn variable is assigned to a certain number 
+(0 does nothing, 1 makes the ufo spawn at the left side, and 2 makes the ufo spawn at the right side).
+Once the ufo spawns, it resets the ufoSpawn variable so the ufo can be respawned after it gets deleted. */
+function checkUfoSpawn() {
+  if (ufoSpawn == 0) {
+    return;
+  } else {
+    if (ufoSpawn == 2) {
+      console.log(ufoSpawn);
+      let ufoEnemy = {
+        x: 1150,
+        y: 50,
+        health: 1,
+        direction: -1
+      }
+      ufoEnemies.push(ufoEnemy)
+      ufoSpawn -= 2;
+    }
+
+    if (ufoSpawn == 1) {
+      console.log(ufoSpawn);
+      let ufoEnemy = {
+        x: 50,
+        y: 50,
+        health: 1,
+        direction: 1
+      }
+      ufoEnemies.push(ufoEnemy)
+      ufoSpawn -= 1;
+    }
+  }
+}
+
 function draw () {
-  clear()
+  clear();
 
   //this makes sure all images and text are loaded from the center
   imageMode(CENTER);
@@ -187,15 +220,36 @@ function draw () {
   if (ufoPity + random(0, 60) > 540) {
     ufoSpawn = Math.round(random(1, 2));
     ufoPity = 0;
-    console.log(ufoSpawn);
+  }
+
+  for (let ufoEnemy of ufoEnemies) {
+    for (let i = playerBullets.length - 1; i >= 0; i--) {
+      let playerBullet = playerBullets[i];
+      if (dist(ufoEnemy.x, ufoEnemy.y, playerBullet.x, playerBullet.y) < 30) {
+        ufoEnemies.splice(ufoEnemies.indexOf(ufoEnemy), 1);
+        playerBullets.splice(i, 1);
+        score += 100;
+      }
+    }
+  }
+
+  checkUfoSpawn();
+
+  //for-loop that gives movement to the ufo
+  for (let ufoEnemy of ufoEnemies) {
+    ufoEnemy.x += moveSpeedUfo * ufoEnemy.direction;
+    rect(ufoEnemy.x, ufoEnemy.y, 50, 30)
+    if (ufoEnemy.x < 0 || ufoEnemy.x > 1200) {
+      ufoEnemies.splice(0, 1);
+    }
   }
 
   //for-loop that adds collision between player bullets and peaceful enemies
   for (let peacefulEnemy of peacefulEnemies)
    for (let i = playerBullets.length - 1; i >= 0; i--){
-    let playerBullet = playerBullets[i]
+    let playerBullet = playerBullets[i];
     if (dist(peacefulEnemy.x, peacefulEnemy.y, playerBullet.x, playerBullet.y) < 30){
-      peacefulEnemies.splice(peacefulEnemies.indexOf(peacefulEnemy),1)
+      peacefulEnemies.splice(peacefulEnemies.indexOf(peacefulEnemy), 1)
       playerBullets.splice(i, 1);
       score += 10;
     }

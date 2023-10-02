@@ -108,7 +108,7 @@ function checkUfoSpawn() {
     if (ufoSpawn == 2) {
       console.log(ufoSpawn);
       let ufoEnemy = {
-        x: 1150,
+        x: 1200,
         y: 50,
         health: 1,
         direction: -1
@@ -120,7 +120,7 @@ function checkUfoSpawn() {
     if (ufoSpawn == 1) {
       console.log(ufoSpawn);
       let ufoEnemy = {
-        x: 50,
+        x: 0,
         y: 50,
         health: 1,
         direction: 1

@@ -3,6 +3,7 @@ const moveSpeedPlayerShip = 8;
 const moveSpeedPlayerBullet = 15;
 const moveSpeedEnemyBullet = 6;
 const moveSpeedEnemy = 1;
+const moveSpeedUfo = 5;
 const distanceFromLeftSide = 30;
 const distanceFromRightSide = 30;
 const distanceFromGround = 30;
@@ -17,11 +18,13 @@ let enemyDirection = 1;
 let score = 0;
 let bulletPity = 1;
 let ufoPity = 1;
+let ufoSpawn = 0;
 let playerBullets = [];
 let enemyBullets = [];
 let shootingEnemies = [];
 let peacefulEnemies = [];
 let shieldUnits = [];
+let ufoEnemies = [];
 
 //preload all images used
 function preload () {
@@ -69,12 +72,6 @@ function setup () {
     }
     shieldUnits.push(shieldUnit);
   }
-
-  let ufoEnemy = {
-    x: 0,
-    y: 200,
-    health: 1
-  }
 }
 
 //creates a bullet object when the spacebar is pressed
@@ -101,8 +98,7 @@ function showHealth() {
 }
 
 function draw () {
-  clear();
-  ufoPity += 1;
+  clear()
 
   //this makes sure all images and text are loaded from the center
   imageMode(CENTER);
@@ -186,6 +182,13 @@ function draw () {
     }
   }
 
+  // calculation that spawns ufo enemies every 7-8 seconds
+  ufoPity += 1;
+  if (ufoPity + random(0, 60) > 540) {
+    ufoSpawn = Math.round(random(1, 2));
+    ufoPity = 0;
+    console.log(ufoSpawn);
+  }
 
   //for-loop that adds collision between player bullets and peaceful enemies
   for (let peacefulEnemy of peacefulEnemies)
@@ -195,7 +198,6 @@ function draw () {
       peacefulEnemies.splice(peacefulEnemies.indexOf(peacefulEnemy),1)
       playerBullets.splice(i, 1);
       score += 10;
-      console.log(score);
     }
   }
 
@@ -230,7 +232,6 @@ function draw () {
         shootingEnemies.splice(shootingEnemies.indexOf(shootingEnemy),1)
         playerBullets.splice(i, 1);
         score += 30;
-        console.log(score);
       }
     }
   }

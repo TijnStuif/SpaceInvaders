@@ -179,7 +179,7 @@ function draw () {
     shootingEnemy.x += moveSpeedEnemy * shootingEnemy.direction;
     let randomBulletSpawn = Math.floor(random(0,100) * 1 + bulletPity);
     bulletPity += 1;
-    if (randomBulletSpawn > 149) {
+    if (randomBulletSpawn > 250) {
       let enemyBullet = {
         x: shootingEnemy.x,
         y: shootingEnemy.y
@@ -293,6 +293,9 @@ function draw () {
     }
     if (shieldUnit.health <= 0) {
       shieldUnits.splice(shieldUnits.indexOf(shieldUnit), 1);
+    }
+    if (shieldUnit.health > 5) {
+      shieldUnit.health -= 1;
     }
   }
 

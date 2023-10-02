@@ -86,12 +86,14 @@ function keyPressed() {
   }
 }
 
+//function that shows score in the top left
 function showScore() {
   fill(255);
   textSize(25);
   text(score, 40, 50);
 }
 
+//function that shows player health in the top left
 function showHealth() {
   fill(255);
   textSize(25);
@@ -199,6 +201,7 @@ function draw () {
     keyIsDown(DKeyCode) && playerShipX < width - distanceFromRightSide) {
     playerShipX += moveSpeedPlayerShip;
   }
+
   //for-loop that determines the spawn point of the enemy bullet and gives it movement
   for (let enemyBullet of enemyBullets) {
     enemyBullet.y += moveSpeedEnemyBullet;
@@ -207,6 +210,7 @@ function draw () {
       enemyBullets.splice(0, 1);
     }
   }
+
   //for-loop that determines the spawn point of the player bullet and gives it movement
   for (let playerBullet of playerBullets){
     playerBullet.y -= moveSpeedPlayerBullet;
@@ -223,17 +227,6 @@ function draw () {
     ufoPity = 0;
   }
 
-  for (let ufoEnemy of ufoEnemies) {
-    for (let i = playerBullets.length - 1; i >= 0; i--) {
-      let playerBullet = playerBullets[i];
-      if (dist(ufoEnemy.x, ufoEnemy.y, playerBullet.x, playerBullet.y) < 50) {
-        ufoEnemies.splice(ufoEnemies.indexOf(ufoEnemy), 1);
-        playerBullets.splice(i, 1);
-        score += 100;
-      }
-    }
-  }
-
   checkUfoSpawn();
 
   //for-loop that gives movement to the ufo
@@ -242,6 +235,18 @@ function draw () {
     image(ufoEnemyImg, ufoEnemy.x, ufoEnemy.y)
     if (ufoEnemy.x < 0 || ufoEnemy.x > 1200) {
       ufoEnemies.splice(0, 1);
+    }
+  }
+
+  //function that adds collision between player bullets and ufo enemies
+  for (let ufoEnemy of ufoEnemies) {
+    for (let i = playerBullets.length - 1; i >= 0; i--) {
+      let playerBullet = playerBullets[i];
+      if (dist(ufoEnemy.x, ufoEnemy.y, playerBullet.x, playerBullet.y) < 50) {
+        ufoEnemies.splice(ufoEnemies.indexOf(ufoEnemy), 1);
+        playerBullets.splice(i, 1);
+        score += 100;
+      }
     }
   }
 
@@ -291,10 +296,6 @@ function draw () {
     }
   }
 
-  //function that shows the score and health in the top-left.
-  showScore();
-  showHealth();
-
   //for-loop that adds collision between enemy bullets and the player ship, as well 
   for (let i = enemyBullets.length - 1; i >= 0; i--){
     let enemyBullet = enemyBullets[i];
@@ -309,6 +310,10 @@ function draw () {
       noLoop();
     }
   }
+
+  //functions that shows the score and health in the top-left.
+  showScore();
+  showHealth();
 
   //if-statement that checks if both types of enemies are dead. If they are, a win-message will pop up
   if (peacefulEnemies.length == 0 && shootingEnemies.length == 0){

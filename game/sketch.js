@@ -35,6 +35,7 @@ function preload () {
   playerBulletImg = loadImage('images_game/player_bullet.png');
   enemyBulletImg = loadImage('images_game/enemy_bullet.png');
   shieldUnitImg = loadImage('images_game/shield.png');
+  ufoEnemyImg = loadImage('images_game/ufo_enemy.png');
 }
 
 function setup () {
@@ -225,7 +226,7 @@ function draw () {
   for (let ufoEnemy of ufoEnemies) {
     for (let i = playerBullets.length - 1; i >= 0; i--) {
       let playerBullet = playerBullets[i];
-      if (dist(ufoEnemy.x, ufoEnemy.y, playerBullet.x, playerBullet.y) < 30) {
+      if (dist(ufoEnemy.x, ufoEnemy.y, playerBullet.x, playerBullet.y) < 50) {
         ufoEnemies.splice(ufoEnemies.indexOf(ufoEnemy), 1);
         playerBullets.splice(i, 1);
         score += 100;
@@ -238,7 +239,7 @@ function draw () {
   //for-loop that gives movement to the ufo
   for (let ufoEnemy of ufoEnemies) {
     ufoEnemy.x += moveSpeedUfo * ufoEnemy.direction;
-    rect(ufoEnemy.x, ufoEnemy.y, 50, 30)
+    image(ufoEnemyImg, ufoEnemy.x, ufoEnemy.y)
     if (ufoEnemy.x < 0 || ufoEnemy.x > 1200) {
       ufoEnemies.splice(0, 1);
     }

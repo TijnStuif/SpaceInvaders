@@ -10,6 +10,7 @@ const distanceFromGround = 30;
 const playerShipY = 590;
 const AKeyCode = 65;
 const DKeyCode = 68;
+const spacebarKeyCode = 32;
 let playerBulletX = 600;
 let playerBulletY = 590;
 let playerShipX = 580;
@@ -81,7 +82,7 @@ function setup () {
 
 //creates a bullet object when the spacebar is pressed
 function keyPressed() {
-  if (keyCode === 32) {
+  if (keyCode === spacebarKeyCode) {
     let playerBullet = {
       x: playerShipX,
       y: playerShipY

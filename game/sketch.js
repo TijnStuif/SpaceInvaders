@@ -69,7 +69,7 @@ function setup () {
     let shieldUnit = {
       x: 150 + i * 300,
       y: 500,
-      health: 10
+      health: 5
     }
     shieldUnits.push(shieldUnit);
   }
@@ -220,6 +220,12 @@ function draw () {
     }
   }
 
+  for (let shieldUnit of shieldUnits) {
+    if (shieldUnit.health == 9) {
+      image(shieldUnitImg, shieldUnit.x, shieldUnit.y)
+    }
+  }
+
   // calculation that spawns ufo enemies every 7-8 seconds
   ufoPity += 1;
   if (ufoPity + random(0, 60) > 540) {
@@ -246,6 +252,10 @@ function draw () {
         ufoEnemies.splice(ufoEnemies.indexOf(ufoEnemy), 1);
         playerBullets.splice(i, 1);
         score += 100;
+        playerShipHealth += 1;
+        shieldUnits.forEach((shieldUnit) => {
+          shieldUnit.health += 1;
+        })
       }
     }
   }
@@ -275,15 +285,6 @@ function draw () {
     }
   }
 
-   //for-loop that adds collision between the player bullets and the shield units
-   for (let shieldUnit of shieldUnits) {
-    for (let i = playerBullets.length - 1; i >= 0; i--){
-      let playerBullet = playerBullets[i];
-      if (dist(shieldUnit.x, shieldUnit.y, playerBullet.x, playerBullet.y) < 40) {
-      playerBullets.splice(i, 1);
-      }
-    }
-  }
   //for-loop that adds collision between player bullets and shooting enemies
   for (let shootingEnemy of shootingEnemies){
     for (let i = playerBullets.length - 1; i >= 0; i--){

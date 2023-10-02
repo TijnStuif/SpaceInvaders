@@ -34,8 +34,12 @@ function preload () {
   shootingEnemyImg = loadImage('images_game/shooting_enemy.png');
   playerBulletImg = loadImage('images_game/player_bullet.png');
   enemyBulletImg = loadImage('images_game/enemy_bullet.png');
-  shieldUnitImg = loadImage('images_game/shield.png');
   ufoEnemyImg = loadImage('images_game/ufo_enemy.png');
+  shieldUnitWhiteImg = loadImage('images_game/shield_stages/shield.png');
+  shieldUnitGreenImg = loadImage('images_game/shield_stages/shieldgreen.png')
+  shieldUnitYellowImg = loadImage('images_game/shield_stages/shieldyellow.png')
+  shieldUnitOrangeImg = loadImage('images_game/shield_stages/shieldorange.png')
+  shieldUnitRedImg = loadImage('images_game/shield_stages/shieldred.png')
 }
 
 function setup () {
@@ -108,7 +112,6 @@ function checkUfoSpawn() {
     return;
   } else {
     if (ufoSpawn == 2) {
-      console.log(ufoSpawn);
       let ufoEnemy = {
         x: 1200,
         y: 50,
@@ -120,7 +123,6 @@ function checkUfoSpawn() {
     }
 
     if (ufoSpawn == 1) {
-      console.log(ufoSpawn);
       let ufoEnemy = {
         x: 0,
         y: 50,
@@ -189,7 +191,7 @@ function draw () {
 
   //for-loop that loads the image of the shield units on the correct x and y coordinate
   for (let shieldUnit of shieldUnits) {
-    image(shieldUnitImg, shieldUnit.x, shieldUnit.y, 100, 100);
+    image(shieldUnitWhiteImg, shieldUnit.x, shieldUnit.y, 100, 100);
   }
   //moves the player to the left if either the left-arrow is pressed or the a-button
   if (keyIsDown(LEFT_ARROW) && playerShipX > distanceFromLeftSide || 
@@ -221,8 +223,17 @@ function draw () {
   }
 
   for (let shieldUnit of shieldUnits) {
-    if (shieldUnit.health == 9) {
-      image(shieldUnitImg, shieldUnit.x, shieldUnit.y)
+    if (shieldUnit.health == 4) {
+      image(shieldUnitGreenImg, shieldUnit.x, shieldUnit.y, 100, 100)
+    }
+    if (shieldUnit.health == 3) {
+      image(shieldUnitYellowImg, shieldUnit.x, shieldUnit.y, 100, 100)
+    }
+    if (shieldUnit.health == 2) {
+      image(shieldUnitOrangeImg, shieldUnit.x, shieldUnit.y, 100, 100)
+    }
+    if (shieldUnit.health == 1) {
+      image(shieldUnitRedImg, shieldUnit.x, shieldUnit.y, 100, 100)
     }
   }
 

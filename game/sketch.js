@@ -223,6 +223,7 @@ function draw () {
     }
   }
 
+  //for-loop that adds colour coding to the shield, and it's remaining health
   for (let shieldUnit of shieldUnits) {
     if (shieldUnit.health == 4) {
       image(shieldUnitGreenImg, shieldUnit.x, shieldUnit.y, 100, 100)
@@ -247,7 +248,7 @@ function draw () {
 
   checkUfoSpawn();
 
-  //for-loop that gives movement to the ufo
+  //for-loop that gives movement to the ufo and removes it from the screen once it hits the side
   for (let ufoEnemy of ufoEnemies) {
     ufoEnemy.x += moveSpeedUfo * ufoEnemy.direction;
     image(ufoEnemyImg, ufoEnemy.x, ufoEnemy.y)

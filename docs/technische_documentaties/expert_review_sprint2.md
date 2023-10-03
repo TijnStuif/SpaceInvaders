@@ -112,6 +112,7 @@ Hierboven is een hele simpele functie gedefinieerd genaamd showScore(). Deze wor
 ### For-loops
 For-loops kunnen enorm handig zijn om meerdere objecten met 1 objectnaam aan te roepen, of zaken te laten gebeuren in een regelmatig patroon.
 ```javascript
+//for-loop that spawns the shield units
 for (let i = 0; i < 4; i++) {
     let shieldUnit = {
       x: 150 + i * 300,
@@ -127,6 +128,9 @@ Hierboven worden in de for-loop shieldUnits gecreeërd door de for-loop. Hierdoo
 If of if-else statements kunnen handig zijn om een bepaald stukje code alleen te laten runnen als er aan een bepaalde voorwaarde voldoet.
 
 ```javascript
+/*function that checks if the ufoSpawn variable is assigned to a certain number 
+(0 does nothing, 1 makes the ufo spawn at the left side, and 2 makes the ufo spawn at the right side).
+Once the ufo spawns, it resets the ufoSpawn variable so the ufo can be respawned after it gets deleted. */
 function checkUfoSpawn() {
   if (ufoSpawn == 0) {
     return;
@@ -162,6 +166,7 @@ In het geval van de code hierboven, is de voorwaarde dat de variable ufoSpawn ee
 Objects zijn net zoals in het echt objecten, met eigen waarden en eigenschappen. Deze worden toegekend aan het object in de code.
 
 ```javascript
+//creates a bullet object when the spacebar is pressed
 function keyPressed() {
   if (keyCode === spacebarKeyCode) {
     let playerBullet = {
@@ -176,6 +181,7 @@ function keyPressed() {
 Hier wordt een object playerBullet aangemaakt. Deze krijgt waardes toegekend voor de x-positie en de y-positie. Hierna wordt de object playerBullet in een array playerBullets toegevoegd. Hierin kan een programmeur allerlei objects op 1 plek opslaan, die vervolgens samen een bepaalde eigenschap, zoals collision tussen een andere object, kunnen verkrijgen. 
 
 ```javascript
+//for-loop that determines the spawn point of the player bullet and gives it movement
 for (let playerBullet of playerBullets){
     playerBullet.y -= moveSpeedPlayerBullet;
     image(playerBulletImg, playerBullet.x,playerBullet.y, 5, 25);

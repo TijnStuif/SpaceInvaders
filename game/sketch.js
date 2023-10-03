@@ -316,7 +316,7 @@ function draw () {
   //for-loop that adds collision between enemy bullets and the player ship, as well 
   for (let i = enemyBullets.length - 1; i >= 0; i--){
     let enemyBullet = enemyBullets[i];
-    if (dist(playerShipX, playerShipY, enemyBullet.x, enemyBullet.y) < 30) {
+    if (dist(playerShipX, playerShipY, enemyBullet.x, enemyBullet.y) < 35) {
       enemyBullets.splice(i, 1);
       playerShipHealth -= 1;
       }

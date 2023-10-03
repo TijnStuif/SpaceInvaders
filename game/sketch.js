@@ -138,7 +138,6 @@ function checkUfoSpawn() {
 
 function draw () {
   clear();
-
   //this makes sure all images and text are loaded from the center
   imageMode(CENTER);
   textAlign(CENTER);

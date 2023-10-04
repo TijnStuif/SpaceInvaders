@@ -25,3 +25,4 @@ Als speler wil ik mijn score kunnen opslaan zodat deze vergeleken kan worden met
 Als speler wil ik alle scores kunnen ophalen zodat ik kan zien hoe goed ik ben ten opzichte van andere spelers.|to-do
 
 ### Activiteiten en technieken SCRUM
+Wij maken dit blok gebruik van sprints en reviews om progressie bij te houden. Dit heeft mij erg geholpen om middenin de projecttijd actie te verrichten, omdat ik van nature een uitstelpersoon ben. Ook ontvang en geef ik hier feedback, wat mij helpt om alerter te zijn bij mijn code, om alles zo herbruikbaar mogelijk op te schrijven. Ook had ik voor deze sprint een doel gezet, waar ik aan heb voldaan (en nog overtroffen). Door de voorbereiding op de meetmomenten, sta ik even stil voor waarom ik op een bepaalde manier werk, en dat ik nog aanpassingen kan maken in het werkproces waar nodig. 

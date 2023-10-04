@@ -1,4 +1,4 @@
-# Product review 1
+# Product review 2 Space Invaders
 
 ## User stories
 User stories vertellen wat een gebruiker verwacht van een bepaald product. Deze verwerkt de programmeur tot de gebruiker blij is met het resultaat. In onze opdracht hebben wij het stappenplan gekregen geheel via user-stories. Op deze manier kon er aan elke mechanic van de game apart gewerkt worden, en maakte dat het proces een stuk overzichtelijker. 

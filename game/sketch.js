@@ -44,7 +44,7 @@ function preload () {
 }
 
 function setup () {
-  createCanvas(1200,600);
+  createCanvas(1200, 600);
   //for-loop that creates the shooting enemies
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 1; j++) {

@@ -3,6 +3,7 @@ const moveSpeedPlayerShip = 8;
 const moveSpeedPlayerBullet = 15;
 const moveSpeedEnemyBullet = 6;
 const moveSpeedEnemy = 1;
+const moveSpeedEnemyDown = 50;
 const moveSpeedUfo = 5;
 const distanceFromLeftSide = 30;
 const distanceFromRightSide = 30;
@@ -11,6 +12,12 @@ const playerShipY = 590;
 const AKeyCode = 65;
 const DKeyCode = 68;
 const spacebarKeyCode = 32;
+const randomBulletThreshold = 250;
+const shieldUnitWidth = 100;
+const shieldUnitHeight = 100;
+const playerBulletWidth = 5;
+const playerBulletHeight = 25;
+const tenSecondsLength = 600;
 let playerBulletX = 600;
 let playerBulletY = 590;
 let playerShipX = 580;
@@ -164,7 +171,7 @@ function draw () {
     image(peacefulEnemyImg, peacefulEnemy.x, peacefulEnemy.y);
     if (enemyTouchesLeft == true || enemyTouchesRight == true) {
       peacefulEnemy.direction *= -1;
-      peacefulEnemy.y += 50;
+      peacefulEnemy.y += moveSpeedEnemyDown;
       }
     peacefulEnemy.x += moveSpeedEnemy * peacefulEnemy.direction;
   }
@@ -173,13 +180,13 @@ function draw () {
   for (let shootingEnemy of shootingEnemies){
    image(shootingEnemyImg, shootingEnemy.x, shootingEnemy.y);
     if (enemyTouchesLeft == true || enemyTouchesRight == true) {
-      shootingEnemy.y += 50;
+      shootingEnemy.y += moveSpeedEnemyDown;
       shootingEnemy.direction *= -1;
       }
     shootingEnemy.x += moveSpeedEnemy * shootingEnemy.direction;
-    let randomBulletSpawn = Math.floor(random(0,100) * 1 + bulletPity);
+    let randomBulletSpawn = Math.floor(random(0,100) + bulletPity);
     bulletPity += 1;
-    if (randomBulletSpawn > 250) {
+    if (randomBulletSpawn > randomBulletThreshold) {
       let enemyBullet = {
         x: shootingEnemy.x,
         y: shootingEnemy.y
@@ -191,7 +198,7 @@ function draw () {
 
   //for-loop that loads the image of the shield units on the correct x and y coordinate
   for (let shieldUnit of shieldUnits) {
-    image(shieldUnitWhiteImg, shieldUnit.x, shieldUnit.y, 100, 100);
+    image(shieldUnitWhiteImg, shieldUnit.x, shieldUnit.y, shieldUnitWidth, shieldUnitHeight);
   }
   //moves the player to the left if either the left-arrow is pressed or the a-button
   if (keyIsDown(LEFT_ARROW) && playerShipX > distanceFromLeftSide || 
@@ -208,7 +215,7 @@ function draw () {
   for (let enemyBullet of enemyBullets) {
     enemyBullet.y += moveSpeedEnemyBullet;
     image(enemyBulletImg, enemyBullet.x, enemyBullet.y);
-    if (enemyBullet.y > 1200) {
+    if (enemyBullet.y > height) {
       enemyBullets.splice(0, 1);
     }
   }
@@ -216,7 +223,7 @@ function draw () {
   //for-loop that determines the spawn point of the player bullet and gives it movement
   for (let playerBullet of playerBullets){
     playerBullet.y -= moveSpeedPlayerBullet;
-    image(playerBulletImg, playerBullet.x,playerBullet.y, 5, 25);
+    image(playerBulletImg, playerBullet.x,  playerBullet.y, playerBulletWidth, playerBulletHeight);
     if (playerBullet.y < 0) {
       playerBullets.splice(0, 1);
     }
@@ -238,9 +245,9 @@ function draw () {
     }
   }
 
-  // calculation that spawns ufo enemies every 7-8 seconds
+  // calculation that spawns ufo enemies every ~10 seconds
   ufoPity += 1;
-  if (ufoPity + random(0, 60) > 540) {
+  if (ufoPity + random(0, 1) > tenSecondsLength) {
     ufoSpawn = Math.round(random(1, 2));
     ufoPity = 0;
   }
@@ -251,7 +258,7 @@ function draw () {
   for (let ufoEnemy of ufoEnemies) {
     ufoEnemy.x += moveSpeedUfo * ufoEnemy.direction;
     image(ufoEnemyImg, ufoEnemy.x, ufoEnemy.y)
-    if (ufoEnemy.x < 0 || ufoEnemy.x > 1200) {
+    if (ufoEnemy.x < 0 || ufoEnemy.x > width) {
       ufoEnemies.splice(0, 1);
     }
   }

@@ -152,11 +152,6 @@ function checkUfoSpawn() {
   }
 }
 
-function stopProgram () {
-  noLoop();
-}
-
-
 function onHighscoreSaved () {
   return loadJSON(`${loadDataURL}?game=${gameID}`);
 }
@@ -168,7 +163,10 @@ function onHighscoreRetrieved(dataAsJson) {
   fill(gameEndColor);
   textSize(100);
   text(gameEndMessage, width / 2, height / 2);
-  stopProgram();
+  fill(255);
+  textSize(50);
+  text(`your score: ${score}`, width / 2, height / 2 + 100)
+  noLoop();
 }
 
 function showHighscores () {

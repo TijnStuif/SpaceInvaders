@@ -18,6 +18,9 @@ const shieldUnitHeight = 100;
 const playerBulletWidth = 5;
 const playerBulletHeight = 25;
 const tenSecondsLength = 600;
+const gameID = 69420;
+const saveDataURL = "https://oege.ie.hva.nl/~hofem/blok1/highscore/save.php";
+const loadDataURL = "https://oege.ie.hva.nl/~hofem/blok1/highscore/load.php";
 let playerBulletX = 600;
 let playerBulletY = 590;
 let playerShipX = 580;
@@ -27,6 +30,12 @@ let score = 0;
 let bulletPity = 1;
 let ufoPity = 1;
 let ufoSpawn = 0;
+let gameWon = false;
+let gameLost = false;
+let gameEndMessage = "";
+let gameEndColor = [];
+const red = [255, 0, 0];
+const green = [0, 255, 0];
 let playerBullets = [];
 let enemyBullets = [];
 let shootingEnemies = [];
@@ -143,6 +152,31 @@ function checkUfoSpawn() {
   }
 }
 
+function stopProgram () {
+  noLoop();
+}
+
+
+function onHighscoreSaved () {
+  return loadJSON(`${loadDataURL}?game=${gameID}`);
+}
+
+function onHighscoreRetrieved(dataAsJson) {
+  console.log(dataAsJson);
+  clear();
+  image(spaceImg, width / 2, height / 2, 1200, 600)
+  fill(gameEndColor);
+  textSize(100);
+  text(gameEndMessage, width / 2, height / 2);
+  stopProgram();
+}
+
+function showHighscores () {
+  httpGet(`${loadDataURL}?game=${gameID}`)
+    .then(onHighscoreSaved)
+    .then(onHighscoreRetrieved)
+}
+
 function draw () {
   clear();
   //this makes sure all images and text are loaded from the center
@@ -160,10 +194,7 @@ function draw () {
                           shootingEnemies.some(shootingEnemy => shootingEnemy.x > width - distanceFromRightSide)
 
   if (enemyTouchesGround == true) {
-    fill(255, 0, 0);
-    textSize(100);
-    text("YOU LOSE!", width / 2, height / 2);
-    noLoop();
+    gameLost = true;
   }
 
   //for-loop that loads the image of the peaceful enemy and gives it movement
@@ -327,10 +358,7 @@ function draw () {
       playerShipHealth -= 1;
       }
     if (playerShipHealth <= 0) { 
-      fill(255, 0, 0);
-      textSize(100);
-      text("YOU LOSE!", width / 2, height / 2);
-      noLoop();
+      gameLost = true;
     }
   }
 
@@ -340,9 +368,20 @@ function draw () {
 
   //if-statement that checks if both types of enemies are dead. If they are, a win-message will pop up
   if (peacefulEnemies.length == 0 && shootingEnemies.length == 0){
-    fill(0, 255, 0);
-    textSize(100);
-    text("YOU WIN!", width / 2, height / 2);
-    noLoop();
+    gameWon = true;
+    }
+  
+  if (gameWon == true) {
+      gameEndMessage = "YOU WIN!"
+      gameEndColor = green
+      httpGet(`${saveDataURL}?game=${gameID}&name=Tijn&score=${score} `, onHighscoreSaved);
+      showHighscores();
+  } else {
+      if (gameLost == true) {
+        gameEndMessage = "YOU LOSE!"
+        gameEndColor = red
+        httpGet(`${saveDataURL}?game=${gameID}&name=Tijn&score=${score} `, onHighscoreSaved);
+        showHighscores();
+      }
     }
 }

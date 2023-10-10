@@ -18,7 +18,7 @@ const shieldUnitHeight = 100;
 const playerBulletWidth = 5;
 const playerBulletHeight = 25;
 const tenSecondsLength = 600;
-const gameID = 69420;
+const gameID = 1234567890;
 const saveDataURL = "https://oege.ie.hva.nl/~hofem/blok1/highscore/save.php";
 const loadDataURL = "https://oege.ie.hva.nl/~hofem/blok1/highscore/load.php";
 let playerBulletX = 600;
@@ -32,6 +32,7 @@ let ufoPity = 1;
 let ufoSpawn = 0;
 let gameWon = false;
 let gameLost = false;
+let scoreSubmitted = false;
 let gameEndMessage = "";
 let gameEndColor = [];
 const red = [255, 0, 0];
@@ -153,26 +154,32 @@ function checkUfoSpawn() {
 }
 
 function onHighscoreSaved () {
-  return loadJSON(`${loadDataURL}?game=${gameID}`);
+  loadJSON(`${loadDataURL}?game=${gameID}`, onHighscoreRetrieved);
 }
 
 function onHighscoreRetrieved(dataAsJson) {
-  console.log(dataAsJson);
+  if (dataAsJson == null) {
+    return
+  }
+  let highscoresSorted = Object.values(dataAsJson);
+  highscoresSorted.sort((a,b) => b.score - a.score)
+  highscoresSorted = highscoresSorted.slice(0, 10);
   clear();
   image(spaceImg, width / 2, height / 2, 1200, 600)
   fill(gameEndColor);
   textSize(100);
-  text(gameEndMessage, width / 2, height / 2);
+  text(gameEndMessage, width / 2, 150);
   fill(255);
   textSize(50);
-  text(`your score: ${score}`, width / 2, height / 2 + 100)
+  text(`your score: ${score}`, width / 2, 200);
+  fill(255);
+  textSize(30);
+  text("Top 10 highscores:", width / 2, 250);
+  for (let i = 0; i < highscoresSorted.length; i++) {
+    const highscores = highscoresSorted[i];
+    text(`${i+1}. ${highscores.name}: ${highscores.score}`, width / 2, 280 + i * 30)
+  }
   noLoop();
-}
-
-function showHighscores () {
-  httpGet(`${loadDataURL}?game=${gameID}`)
-    .then(onHighscoreSaved)
-    .then(onHighscoreRetrieved)
 }
 
 function draw () {
@@ -369,17 +376,17 @@ function draw () {
     gameWon = true;
     }
   
-  if (gameWon == true) {
+  if (gameWon == true  && scoreSubmitted == false) {
       gameEndMessage = "YOU WIN!"
       gameEndColor = green
       httpGet(`${saveDataURL}?game=${gameID}&name=Tijn&score=${score} `, onHighscoreSaved);
-      showHighscores();
-  } else {
-      if (gameLost == true) {
+      onHighscoreSaved();
+      scoreSubmitted = true;
+  } else if (gameLost == true && scoreSubmitted == false) {
         gameEndMessage = "YOU LOSE!"
         gameEndColor = red
         httpGet(`${saveDataURL}?game=${gameID}&name=Tijn&score=${score} `, onHighscoreSaved);
-        showHighscores();
-      }
+        onHighscoreSaved();
+        scoreSubmitted = true;
     }
 }

@@ -33,6 +33,9 @@ let ufoSpawn = 0;
 let gameWon = false;
 let gameLost = false;
 let scoreSubmitted = false;
+let startScreen = true;
+let gameScreen = false;
+let endScreen = false;
 let gameEndMessage = "";
 let gameEndColor = [];
 const red = [255, 0, 0];
@@ -106,7 +109,13 @@ function keyPressed() {
     }
     playerBullets.push(playerBullet);
   }
+  if (keyCode === ENTER && startScreen == true) {
+    startScreen = false;
+    gameScreen = true;
+  }
 }
+
+
 
 //function that shows score in the top left
 function showScore() {
@@ -184,9 +193,16 @@ function onHighscoreRetrieved(dataAsJson) {
 
 function draw () {
   clear();
-  //this makes sure all images and text are loaded from the center
-  imageMode(CENTER);
-  textAlign(CENTER);
+    //this makes sure all images and text are loaded from the center
+    imageMode(CENTER);
+    textAlign(CENTER);
+  if (startScreen == true) {
+    image(spaceImg, 600, 300);
+    fill(255);
+    textSize(70);
+    text("PRESS ENTER TO START", 600, 300)
+    return;
+  }
   image(spaceImg, 600, 300);
   image(playerShipImg, playerShipX, playerShipY);
 

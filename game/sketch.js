@@ -392,7 +392,7 @@ function draw () {
     gameWon = true;
     }
   
-  if (gameWon == true  && scoreSubmitted == false) {
+  if (gameWon == true  && scoreSubmitted == false ) {
       gameEndMessage = "YOU WIN!"
       gameEndColor = green
       httpGet(`${saveDataURL}?game=${gameID}&name=Tijn&score=${score} `, onHighscoreSaved);

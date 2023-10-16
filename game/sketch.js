@@ -18,7 +18,7 @@ const shieldUnitHeight = 100;
 const playerBulletWidth = 5;
 const playerBulletHeight = 25;
 const tenSecondsLength = 600;
-const gameID = 1234567890;
+const gameID = 999999999;
 const saveDataURL = "https://oege.ie.hva.nl/~hofem/blok1/highscore/save.php";
 const loadDataURL = "https://oege.ie.hva.nl/~hofem/blok1/highscore/load.php";
 let playerBulletX = 600;
@@ -37,6 +37,7 @@ let startScreen = true;
 let gameScreen = false;
 let endScreen = false;
 let gameEndMessage = "";
+let name = "";
 let gameEndColor = [];
 const red = [255, 0, 0];
 const green = [0, 255, 0];
@@ -46,6 +47,7 @@ let shootingEnemies = [];
 let peacefulEnemies = [];
 let shieldUnits = [];
 let ufoEnemies = [];
+let highscoresSorted = [];
 
 //preload all images used
 function preload () {
@@ -109,13 +111,13 @@ function keyPressed() {
     }
     playerBullets.push(playerBullet);
   }
-  if (keyCode === ENTER && startScreen == true) {
-    startScreen = false;
-    gameScreen = true;
+  if (keyCode === ENTER) {
+    if (startScreen) {
+      startScreen = false;
+      gameScreen = true;
+    }
   }
 }
-
-
 
 //function that shows score in the top left
 function showScore() {
@@ -168,41 +170,73 @@ function onHighscoreSaved () {
 
 function onHighscoreRetrieved(dataAsJson) {
   if (dataAsJson == null) {
-    return
+    return;
   }
-  let highscoresSorted = Object.values(dataAsJson);
+  highscoresSorted = Object.values(dataAsJson);
   highscoresSorted.sort((a,b) => b.score - a.score)
   highscoresSorted = highscoresSorted.slice(0, 10);
-  clear();
-  image(spaceImg, width / 2, height / 2, 1200, 600)
-  fill(gameEndColor);
-  textSize(100);
-  text(gameEndMessage, width / 2, 150);
-  fill(255);
-  textSize(50);
-  text(`your score: ${score}`, width / 2, 200);
+}
+
+function showHighscores() {
   fill(255);
   textSize(30);
   text("Top 10 highscores:", width / 2, 250);
   for (let i = 0; i < highscoresSorted.length; i++) {
-    const highscores = highscoresSorted[i];
-    text(`${i+1}. ${highscores.name}: ${highscores.score}`, width / 2, 280 + i * 30)
+    const highscore = highscoresSorted[i];
+    text(`${i+1}. ${highscore.name}: ${highscore.score}`, width / 2, 280 + i * 30)
   }
-  noLoop();
+}
+
+function showNameContent(callback) {
+  if (scoreSubmitted) {
+    return;
+  }
+  const box = document.getElementById("nameBox");
+  box.style.display = "block";
+
+  const submitButton = document.getElementById("submitName");
+  submitButton.addEventListener("click", function() {
+    name = document.getElementById("name").value;
+    hideNameContent();
+    if (!scoreSubmitted) {
+    httpGet(`${saveDataURL}?game=${gameID}&name=${name}&score=${score} `, onHighscoreSaved);
+    onHighscoreSaved();
+    scoreSubmitted = true;
+    }
+    callback();
+  });
+}
+
+
+// ...
+
+
+function hideNameContent () {
+  const box = document.getElementById("nameBox");
+  box.style.display = "none";
 }
 
 function draw () {
   clear();
-    //this makes sure all images and text are loaded from the center
-    imageMode(CENTER);
-    textAlign(CENTER);
-  if (startScreen == true) {
+  let highscoresSorted = [];
+
+  //this makes sure all images and text are loaded from the center
+  imageMode(CENTER);
+  textAlign(CENTER);
+  
+  if (startScreen == true || gameScreen == true) {
+    hideNameContent();
+  }
+  
+  if (startScreen) {
     image(spaceImg, 600, 300);
     fill(255);
     textSize(70);
     text("PRESS ENTER TO START", 600, 300)
     return;
   }
+
+  if (gameScreen) {
   image(spaceImg, 600, 300);
   image(playerShipImg, playerShipX, playerShipY);
 
@@ -391,18 +425,34 @@ function draw () {
   if (peacefulEnemies.length == 0 && shootingEnemies.length == 0){
     gameWon = true;
     }
-  
+  }
+
   if (gameWon == true  && scoreSubmitted == false ) {
       gameEndMessage = "YOU WIN!"
-      gameEndColor = green
-      httpGet(`${saveDataURL}?game=${gameID}&name=Tijn&score=${score} `, onHighscoreSaved);
-      onHighscoreSaved();
-      scoreSubmitted = true;
+      gameEndColor = green;
+      gameScreen = false;
+      showNameContent(function() {
+        endScreen = true;
+        scoreSubmitted = true;
+      });
   } else if (gameLost == true && scoreSubmitted == false) {
         gameEndMessage = "YOU LOSE!"
-        gameEndColor = red
-        httpGet(`${saveDataURL}?game=${gameID}&name=Tijn&score=${score} `, onHighscoreSaved);
-        onHighscoreSaved();
-        scoreSubmitted = true;
+        gameEndColor = red;
+        gameScreen = false;
+        showNameContent(function() {
+          endScreen = true;
+          scoreSubmitted = true;
+        });
     }
+  if (endScreen && scoreSubmitted) {
+  playerBullets.splice(0,Infinity)
+  image(spaceImg, width / 2, height / 2, 1200, 600)
+  fill(gameEndColor);
+  textSize(100);
+  text(gameEndMessage, width / 2, 150);
+  fill(255);
+  textSize(50);
+  text(`your score: ${score}`, width / 2, 200);
+  showHighscores();
+  }
 }

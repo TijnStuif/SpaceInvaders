@@ -193,6 +193,13 @@ function showNameContent(callback) {
   }
 
   image(spaceImg, 600, 300)
+  image(spaceImg, width / 2, height / 2, 1200, 600)
+  fill(gameEndColor);
+  textSize(100);
+  text(gameEndMessage, width / 2, 150);
+  fill(255);
+  textSize(50);
+  text(`your score: ${score}`, width / 2, 200);
   const box = document.getElementById("nameBox");
   box.style.display = "block";
 

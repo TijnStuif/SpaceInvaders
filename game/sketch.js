@@ -209,10 +209,6 @@ function showNameContent(callback) {
   });
 }
 
-
-// ...
-
-
 function hideNameContent () {
   const box = document.getElementById("nameBox");
   box.style.display = "none";
@@ -220,7 +216,6 @@ function hideNameContent () {
 
 function draw () {
   clear();
-  let highscoresSorted = [];
 
   //this makes sure all images and text are loaded from the center
   imageMode(CENTER);
@@ -449,7 +444,7 @@ function draw () {
     }
   
     //if-statement that checks if the score is submitted, then it will show your own score and highscore.
-  if (endScreen && !scoreSubmitted) {
+  if (endScreen && scoreSubmitted) {
   playerBullets.splice(0,Infinity)
   image(spaceImg, width / 2, height / 2, 1200, 600)
   fill(gameEndColor);

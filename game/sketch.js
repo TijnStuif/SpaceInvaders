@@ -206,7 +206,6 @@ function showNameContent(callback) {
   const box = document.getElementById("nameBox");
   box.style.display = "block";
 
-
   /*adds click function to submit button that does the following: hide highscore name box, 
   saves highscore under the entered name and obtained score, runs the highscoreSaved function, and turns score submitted to true */
   const submitButton = document.getElementById("submitName");
@@ -461,7 +460,7 @@ function draw () {
   
     //if-statement that checks if the score is submitted, then it will show your own score and highscore.
   if (endScreen && scoreSubmitted) {
-    playerBullets.splice(0,Infinity)
+    playerBullets.splice(0, Infinity)
     image(spaceImg, width / 2, height / 2, 1200, 600)
     fill(gameEndColor);
     textSize(100);

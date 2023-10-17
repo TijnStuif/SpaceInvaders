@@ -191,6 +191,8 @@ function showNameContent(callback) {
   if (scoreSubmitted) {
     return;
   }
+
+  image(spaceImg, 600, 300)
   const box = document.getElementById("nameBox");
   box.style.display = "block";
 
@@ -427,6 +429,7 @@ function draw () {
     }
   }
 
+  //if-statement that checks if the game is won or lost. The canvas then displays a message, and lets you enter your own name
   if (gameWon == true  && scoreSubmitted == false ) {
       gameEndMessage = "YOU WIN!"
       gameEndColor = green;
@@ -444,7 +447,9 @@ function draw () {
           scoreSubmitted = true;
         });
     }
-  if (endScreen && scoreSubmitted) {
+  
+    //if-statement that checks if the score is submitted, then it will show your own score and highscore.
+  if (endScreen && !scoreSubmitted) {
   playerBullets.splice(0,Infinity)
   image(spaceImg, width / 2, height / 2, 1200, 600)
   fill(gameEndColor);
@@ -455,4 +460,5 @@ function draw () {
   text(`your score: ${score}`, width / 2, 200);
   showHighscores();
   }
+  
 }

@@ -5,9 +5,12 @@ body {
 }
 
 div {
-    padding: 50px;
     text-align: center;
-    color: #FFF
+    color: #FFF;
+    position: absolute;
+    top: 400px;
+    left: 400px;
+    z-index: 5;
 }
 
 canvas {

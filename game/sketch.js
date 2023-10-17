@@ -164,10 +164,12 @@ function checkUfoSpawn() {
   }
 }
 
+//function that loads all the data from the save database to the load database
 function onHighscoreSaved () {
   loadJSON(`${loadDataURL}?game=${gameID}`, onHighscoreRetrieved);
 }
 
+//function that sorts the highscores from the database to a top-10 based on highest score
 function onHighscoreRetrieved(dataAsJson) {
   if (dataAsJson == null) {
     return;
@@ -177,6 +179,7 @@ function onHighscoreRetrieved(dataAsJson) {
   highscoresSorted = highscoresSorted.slice(0, 10);
 }
 
+//shows a list of the top-10 highscores from the database, based on highest points
 function showHighscores() {
   fill(255);
   textSize(30);
@@ -187,11 +190,11 @@ function showHighscores() {
   }
 }
 
+//functions that shows the highscore name box and final score, as well as telling if you lost or won
 function showNameContent(callback) {
   if (scoreSubmitted) {
     return;
   }
-
   image(spaceImg, 600, 300)
   image(spaceImg, width / 2, height / 2, 1200, 600)
   fill(gameEndColor);
@@ -203,6 +206,9 @@ function showNameContent(callback) {
   const box = document.getElementById("nameBox");
   box.style.display = "block";
 
+
+  /*adds click function to submit button that does the following: hide highscore name box, 
+  saves highscore under the entered name and obtained score, runs the highscoreSaved function, and turns score submitted to true */
   const submitButton = document.getElementById("submitName");
   submitButton.addEventListener("click", function() {
     name = document.getElementById("name").value;
@@ -216,6 +222,7 @@ function showNameContent(callback) {
   });
 }
 
+//function that hides the highscore name box
 function hideNameContent () {
   const box = document.getElementById("nameBox");
   box.style.display = "none";
@@ -228,10 +235,12 @@ function draw () {
   imageMode(CENTER);
   textAlign(CENTER);
   
+  //this makes sure that the highscore name box only shows up if the game is over (won or lost)
   if (startScreen == true || gameScreen == true) {
     hideNameContent();
   }
   
+  //this adds a start screen which can be exited by pressing the ENTER button. The game will start after that
   if (startScreen) {
     image(spaceImg, 600, 300);
     fill(255);
@@ -452,15 +461,14 @@ function draw () {
   
     //if-statement that checks if the score is submitted, then it will show your own score and highscore.
   if (endScreen && scoreSubmitted) {
-  playerBullets.splice(0,Infinity)
-  image(spaceImg, width / 2, height / 2, 1200, 600)
-  fill(gameEndColor);
-  textSize(100);
-  text(gameEndMessage, width / 2, 150);
-  fill(255);
-  textSize(50);
-  text(`your score: ${score}`, width / 2, 200);
-  showHighscores();
+    playerBullets.splice(0,Infinity)
+    image(spaceImg, width / 2, height / 2, 1200, 600)
+    fill(gameEndColor);
+    textSize(100);
+    text(gameEndMessage, width / 2, 150);
+    fill(255);
+    textSize(50);
+    text(`your score: ${score}`, width / 2, 200);
+    showHighscores();
   }
-  
 }
